@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2EBD9CA210C2F565ADC03D32 /* PlayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBD9435D2A4C6AF182B5CAE /* PlayItem.m */; };
-		3FE09DE083AE7CF9E2A7DCA7 /* libPods-maoying.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F682EEA7DCEA6320B887D254 /* libPods-maoying.a */; };
+		67FF55C5EE01AB831D10CC6F /* libPods-NewPipe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE94DEEF24F4D223B4F0848 /* libPods-NewPipe.a */; };
 		E717B33B2192D778008F09B3 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E717B33A2192D778008F09B3 /* SearchViewController.m */; };
 		E717B33D2192E2BC008F09B3 /* search.html in Resources */ = {isa = PBXBuildFile; fileRef = E717B33C2192E2BC008F09B3 /* search.html */; };
 		E71BF28F2188313C00FEC428 /* VideoItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E71BF28E2188313C00FEC428 /* VideoItemTableViewCell.xib */; };
@@ -86,10 +86,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0154BDACF8BB0F09170EF13B /* Pods-maoying.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maoying.debug.xcconfig"; path = "Pods/Target Support Files/Pods-maoying/Pods-maoying.debug.xcconfig"; sourceTree = "<group>"; };
+		1FE94DEEF24F4D223B4F0848 /* libPods-NewPipe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewPipe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EBD9046420A3B6913150A7A /* PlayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayItem.h; sourceTree = "<group>"; };
 		2EBD9435D2A4C6AF182B5CAE /* PlayItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayItem.m; sourceTree = "<group>"; };
-		B82534AE43E61AC0CDF54286 /* Pods-maoying.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maoying.release.xcconfig"; path = "Pods/Target Support Files/Pods-maoying/Pods-maoying.release.xcconfig"; sourceTree = "<group>"; };
+		9A36AB2E9CD06111E0CCD99E /* Pods-NewPipe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewPipe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NewPipe/Pods-NewPipe.debug.xcconfig"; sourceTree = "<group>"; };
 		E717B3392192D778008F09B3 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		E717B33A2192D778008F09B3 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; tabWidth = 4; };
 		E717B33C2192E2BC008F09B3 /* search.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = search.html; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 		E7F0BB7A218D94EA00DD1FF9 /* NSString+Util.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
 		E7F0BB7C218D9A7B00DD1FF9 /* SVProgressHUD+Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD+Util.h"; sourceTree = "<group>"; };
 		E7F0BB7D218D9A7B00DD1FF9 /* SVProgressHUD+Util.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD+Util.m"; sourceTree = "<group>"; };
-		F682EEA7DCEA6320B887D254 /* libPods-maoying.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-maoying.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED80DE19AA2081B9F2C10DB4 /* Pods-NewPipe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewPipe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NewPipe/Pods-NewPipe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,7 +206,7 @@
 			files = (
 				E7B9981E217CBCA0006C32F3 /* libxml2.2.tbd in Frameworks */,
 				E753FFE62189487700A68F51 /* ZFPlayer.framework in Frameworks */,
-				3FE09DE083AE7CF9E2A7DCA7 /* libPods-maoying.a in Frameworks */,
+				67FF55C5EE01AB831D10CC6F /* libPods-NewPipe.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,8 +241,8 @@
 		41276097A84F3862CC794E8C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0154BDACF8BB0F09170EF13B /* Pods-maoying.debug.xcconfig */,
-				B82534AE43E61AC0CDF54286 /* Pods-maoying.release.xcconfig */,
+				9A36AB2E9CD06111E0CCD99E /* Pods-NewPipe.debug.xcconfig */,
+				ED80DE19AA2081B9F2C10DB4 /* Pods-NewPipe.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -251,7 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				E7B9981D217CBCA0006C32F3 /* libxml2.2.tbd */,
-				F682EEA7DCEA6320B887D254 /* libPods-maoying.a */,
+				1FE94DEEF24F4D223B4F0848 /* libPods-NewPipe.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -831,7 +831,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-maoying/Pods-maoying-resources.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-NewPipe/Pods-NewPipe-resources.sh",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 				"${PODS_ROOT}/youtube-ios-player-helper/youtube-ios-player-helper/Assets.bundle",
@@ -844,7 +844,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-maoying/Pods-maoying-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NewPipe/Pods-NewPipe-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7CD0E1D6127F1F5DDCAD8ECF /* [CP] Check Pods Manifest.lock */ = {
@@ -858,7 +858,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-maoying-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-NewPipe-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1080,7 +1080,7 @@
 		};
 		E747BEE22172DC2C00A05623 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0154BDACF8BB0F09170EF13B /* Pods-maoying.debug.xcconfig */;
+			baseConfigurationReference = 9A36AB2E9CD06111E0CCD99E /* Pods-NewPipe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1129,7 +1129,7 @@
 		};
 		E747BEE32172DC2C00A05623 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B82534AE43E61AC0CDF54286 /* Pods-maoying.release.xcconfig */;
+			baseConfigurationReference = ED80DE19AA2081B9F2C10DB4 /* Pods-NewPipe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
