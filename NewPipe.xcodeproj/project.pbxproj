@@ -52,6 +52,8 @@
 		E753FFF62189487700A68F51 /* KSMediaPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E753FFE42189487700A68F51 /* KSMediaPlayerManager.m */; };
 		E76DD05C217DA40A000F1286 /* ytb.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E76DD05A217DA40A000F1286 /* ytb.xcdatamodeld */; };
 		E79086AC21871C2000BA9B51 /* trending1.html in Resources */ = {isa = PBXBuildFile; fileRef = E79086AB21871C2000BA9B51 /* trending1.html */; };
+		E793BBBA21A1BD9700C2657E /* ZJDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E793BBB921A1BD9600C2657E /* ZJDrawerController.m */; };
+		E793BBBD21A1BE7800C2657E /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E793BBBC21A1BE7800C2657E /* SettingViewController.m */; };
 		E79FD1C421744AF20045589B /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E79FD1C321744AF20045589B /* CollectionViewController.m */; };
 		E79FD1C721744BC20045589B /* BaseTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = E79FD1C621744BC20045589B /* BaseTabController.m */; };
 		E79FD1CA21744BDB0045589B /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E79FD1C921744BDB0045589B /* BaseNavigationController.m */; };
@@ -169,6 +171,10 @@
 		E753FFE52189487700A68F51 /* KSMediaPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMediaPlayerManager.h; sourceTree = "<group>"; };
 		E76DD05B217DA40A000F1286 /* ytb.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ytb.xcdatamodel; sourceTree = "<group>"; };
 		E79086AB21871C2000BA9B51 /* trending1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = trending1.html; sourceTree = "<group>"; };
+		E793BBB821A1BD9600C2657E /* ZJDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJDrawerController.h; sourceTree = "<group>"; };
+		E793BBB921A1BD9600C2657E /* ZJDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJDrawerController.m; sourceTree = "<group>"; };
+		E793BBBB21A1BE7800C2657E /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		E793BBBC21A1BE7800C2657E /* SettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		E79FD1C221744AF20045589B /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
 		E79FD1C321744AF20045589B /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		E79FD1C521744BC20045589B /* BaseTabController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTabController.h; sourceTree = "<group>"; };
@@ -617,8 +623,6 @@
 		E79FD1CB21744BF30045589B /* SysFrameWorkModule */ = {
 			isa = PBXGroup;
 			children = (
-				E79FD1CE21744C250045589B /* Model */,
-				E79FD1CD21744C200045589B /* View */,
 				E79FD1CC21744C180045589B /* Controller */,
 			);
 			path = SysFrameWorkModule;
@@ -627,24 +631,14 @@
 		E79FD1CC21744C180045589B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E793BBB821A1BD9600C2657E /* ZJDrawerController.h */,
+				E793BBB921A1BD9600C2657E /* ZJDrawerController.m */,
 				E79FD1CF21744C490045589B /* MainTabController.h */,
 				E79FD1D021744C490045589B /* MainTabController.m */,
+				E793BBBB21A1BE7800C2657E /* SettingViewController.h */,
+				E793BBBC21A1BE7800C2657E /* SettingViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		E79FD1CD21744C200045589B /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		E79FD1CE21744C250045589B /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		E79FD1D5217491EE0045589B /* Util */ = {
@@ -881,6 +875,7 @@
 				E753FFE92189487700A68F51 /* ZFUtilities.m in Sources */,
 				E753FFF62189487700A68F51 /* KSMediaPlayerManager.m in Sources */,
 				E753FFF52189487700A68F51 /* UIImageView+ZFCache.m in Sources */,
+				E793BBBA21A1BD9700C2657E /* ZJDrawerController.m in Sources */,
 				E7B9981A217CBC6E006C32F3 /* XPathQuery.m in Sources */,
 				E747BF18217340AC00A05623 /* BaseViewController.m in Sources */,
 				E747BEC82172DC2C00A05623 /* main.m in Sources */,
@@ -902,6 +897,7 @@
 				E753FFEB2189487700A68F51 /* ZFVolumeBrightnessView.m in Sources */,
 				E753FFEA2189487700A68F51 /* UIView+ZFFrame.m in Sources */,
 				E717B33B2192D778008F09B3 /* SearchViewController.m in Sources */,
+				E793BBBD21A1BE7800C2657E /* SettingViewController.m in Sources */,
 				E7B9981C217CBC6E006C32F3 /* TFHpple.m in Sources */,
 				E753FFEF2189487700A68F51 /* ZFSliderView.m in Sources */,
 				E79FD1D421744D4B0045589B /* RecommendViewController.m in Sources */,
@@ -1084,9 +1080,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4XYM9K6GMH;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = N6D9A5K3PR;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1121,8 +1117,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sings.NewPipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "b60befde-130a-4890-8ee6-8d4c03d0c2e0";
+				PROVISIONING_PROFILE_SPECIFIER = distri_provisioning;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1133,9 +1129,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4XYM9K6GMH;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = N6D9A5K3PR;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1161,8 +1157,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sings.NewPipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "b60befde-130a-4890-8ee6-8d4c03d0c2e0";
+				PROVISIONING_PROFILE_SPECIFIER = distri_provisioning;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

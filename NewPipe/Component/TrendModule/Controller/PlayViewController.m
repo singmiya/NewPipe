@@ -42,6 +42,9 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, copy) NSArray *dataSource;
 @property (nonatomic, strong) HeadView *headView;
+@property (nonatomic, strong) UIView *nextTrackAlertView;
+@property (nonatomic, assign) NSInteger currentPlayIndex;
+
 @end
 
 @implementation PlayViewController
@@ -72,11 +75,6 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     self.player.orientationWillChange = ^(ZFPlayerController *_Nonnull player, BOOL isFullScreen) {
         @strongify(self)
         [self setNeedsStatusBarAppearanceUpdate];
-    };
-    // 播放完成
-    self.player.playerDidToEnd = ^(id <ZFPlayerMediaPlayback> _Nonnull asset) {
-        @strongify(self)
-        [self.player.currentPlayerManager stop];
     };
     self.player.gestureControl.singleTapped = ^(ZFPlayerGestureControl * _Nonnull control) {
         [self changeBackButnStatus];
@@ -128,6 +126,26 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
         });
     } withVid:self.item.vid];
     [self playVideo];
+    self.currentPlayIndex = -1;
+    // 播放完成
+    self.player.playerDidToEnd = ^(id <ZFPlayerMediaPlayback> _Nonnull asset) {
+        @strongify(self)
+        [self.player stop];
+        self.currentPlayIndex ++;
+        // 自动播放下一首
+        if (self.currentPlayIndex >= self.dataSource.count) {
+            [SVProgressHUD showInfoWithStatus:@"列表播放完毕"];
+            return;
+        }
+        PlayItem *newItem = self.dataSource[self.currentPlayIndex];
+        if ([newItem.vid isEqualToString:self.item.vid]) {
+            return;
+        }
+        self.item = newItem;
+        [self.containerView setImageWithURLString:self.item.imgurl placeholder:nil];
+        [self playVideo];
+        
+    };
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -172,6 +190,10 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     self.playBtn.frame = CGRectMake(x, y, w, h);
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+    //    self.player.currentPlayerManager.muted = !self.player.currentPlayerManager.muted;
+}
 #pragma mark- methouds
 
 - (void)playVideo {
@@ -285,15 +307,10 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     self.item = newItem;
     [self.containerView setImageWithURLString:self.item.imgurl placeholder:nil];
     [self playVideo];
+    self.currentPlayIndex = indexPath.row;
 }
 
 #pragma mark- init subviews
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.view endEditing:YES];
-    //    self.player.currentPlayerManager.muted = !self.player.currentPlayerManager.muted;
-}
-
 - (ZFPlayerControlView *)controlView {
     if (!_controlView) {
         _controlView = [ZFPlayerControlView new];
@@ -352,6 +369,14 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
         _headView = [[HeadView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
     }
     return _headView;
+}
+
+- (UIView *)nextTrackAlertView {
+    if (!_nextTrackAlertView) {
+        _nextTrackAlertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
+        _nextTrackAlertView.backgroundColor = [UIColor redColor];
+    }
+    return _nextTrackAlertView;
 }
 
 #pragma mark- status bar

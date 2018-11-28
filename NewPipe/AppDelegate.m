@@ -9,7 +9,8 @@
 #import "AppDelegate.h"
 #import "MainTabController.h"
 #import <MagicalRecord/MagicalRecord.h>
-
+#import "ZJDrawerController.h"
+#import "SettingViewController.h"
 
 @interface AppDelegate ()
 
@@ -22,15 +23,17 @@
     // Override point for customization after application launch.
     // 初始化数据库
     [MagicalRecord setupAutoMigratingCoreDataStack];
-    
     MainTabController *mainTab = [[MainTabController alloc] init];
-    UILabel *topTag = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.window.frame.size.width, 20)];
-    topTag.textAlignment = NSTextAlignmentCenter;
-    topTag.textColor = [UIColor lightGrayColor];
-    topTag.font = [UIFont systemFontOfSize:12];
-    topTag.text = @"哈哈哈-youtobe";
-    [self.window addSubview:topTag];
-    self.window.rootViewController  = mainTab;
+    SettingViewController *settingVC = [[SettingViewController alloc] init];
+    ZJDrawerController *drawer = [[ZJDrawerController alloc] initWithLeftController:settingVC centerController:mainTab rightController:nil];
+    // 背景图片
+    drawer.backgroundImage = [UIImage imageNamed:@"bg"];
+    // 动画类型
+    drawer.drawerControllerStyle = ZJDrawerControllerStyleScale;
+    // 任何界面都能打开抽屉
+    drawer.canOpenDrawerAtAnyPage = YES;
+    drawer.maxLeftControllerWidth = 250;
+    self.window.rootViewController  = drawer;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyWindow];
     return YES;
