@@ -49,7 +49,7 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
 }
 - (void)loadData {
     __weak __typeof(self) weakSelf = self;
-    [SVProgressHUD showWithStatus:@"加载中..."];
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
     [PlayItem getSearchResult:^(NSArray *retList) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf.dataSource addObjectsFromArray:retList];
@@ -75,7 +75,7 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
         _searchController.obscuresBackgroundDuringPresentation = NO;
         _searchController.searchBar.barTintColor = [UIColor blackColor];
         _searchController.searchBar.tintColor = UICOLOR_HEX(0xE54D42);
-        _searchController.searchBar.placeholder = @"key words";
+        _searchController.searchBar.placeholder = NSLocalizedString(@"KeyWords", nil);
         [_searchController.searchBar positionAdjustmentForSearchBarIcon:UISearchBarIconSearch];
         [self setSearchBarTheme:_searchController.searchBar];
     }
@@ -119,6 +119,7 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
         _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
             NSString *searchStr = self.searchController.searchBar.text;
             if (searchStr != nil && ![searchStr isEqualToString:@""]) {
+                self.currentPage ++;
                 [self loadData];
             } else {
                 [self.tableView.mj_footer endRefreshing];

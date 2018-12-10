@@ -34,7 +34,7 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
 }
 - (void)loadData {
     __weak __typeof(self) weakSelf = self;
-    [SVProgressHUD showWithStatus:@"加载中..."];
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
     [PlayItem getPlayItemList:^(NSArray * _Nonnull playList) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         strongSelf.dataSource = playList;

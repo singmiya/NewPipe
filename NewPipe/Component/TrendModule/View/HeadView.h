@@ -11,7 +11,7 @@
 typedef void(^CallBack)(void);
 
 @interface HeadView : UIView
-@property (nonatomic, copy) CallBack bgPlayBtnCallBack;
+@property (nonatomic, copy) CallBack praiseBtnCallBack;
 @property (nonatomic, copy) CallBack addBtnCallBack;
 
 - (void)configData:(VideoInfo *)info;

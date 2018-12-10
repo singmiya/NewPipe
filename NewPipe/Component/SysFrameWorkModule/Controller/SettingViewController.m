@@ -24,7 +24,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.tableView];
-    self.section2Data = @[@{@"title":@"关于我们"}, @{@"title":@"赞一个"}, @{@"title":@"隐私政策"}];
+    self.section2Data = @[@{@"title":NSLocalizedString(@"AboutUS", nil)}, @{@"title":NSLocalizedString(@"Like", nil)}, @{@"title":NSLocalizedString(@"Privacy", nil)}];
     self.section1Data = [NSMutableArray array];
     NSString *url = [NSString stringWithFormat:@"%@%@", BASE_URL, @"Category.json"];
     [[DataSourceManager sharedInstance] get:url params:nil success:^(id response) {
@@ -67,15 +67,15 @@
 #pragma mark -
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Alert" message:@"警告" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Alert" message:NSLocalizedString(@"Warring", nil) preferredStyle:UIAlertControllerStyleAlert];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"点击取消");
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"点击确认");
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"警告" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Warring", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"点击警告");
     }]];
     [self presentViewController:alertController animated:YES completion:nil];

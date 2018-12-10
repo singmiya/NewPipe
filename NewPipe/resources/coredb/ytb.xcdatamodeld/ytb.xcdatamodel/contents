@@ -8,12 +8,13 @@
         <attribute name="goodnum" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imgurl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lasttime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="playnum" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updateTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="vid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CollectionItem" positionX="-63" positionY="-18" width="128" height="208"/>
+        <element name="CollectionItem" positionX="-63" positionY="-18" width="128" height="225"/>
     </elements>
 </model>

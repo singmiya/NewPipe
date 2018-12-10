@@ -1,9 +1,8 @@
 //
 //  CollectionItem+CoreDataProperties.m
-//  maoying
+//  
 //
-//  Created by Somiya on 2018/11/7.
-//  Copyright © 2018 Somiya. All rights reserved.
+//  Created by Somiya on 2018/12/10.
 //
 //
 
@@ -15,16 +14,17 @@
 	return [NSFetchRequest fetchRequestWithEntityName:@"CollectionItem"];
 }
 
-@dynamic vid;
-@dynamic title;
-@dynamic duration;
-@dynamic imgurl;
-@dynamic playnum;
-@dynamic badnum;
-@dynamic goodnum;
-@dynamic lasttime;
 @dynamic author;
+@dynamic badnum;
 @dynamic createTime;
+@dynamic duration;
+@dynamic goodnum;
+@dynamic imgurl;
+@dynamic lasttime;
+@dynamic playnum;
+@dynamic title;
 @dynamic updateTime;
+@dynamic vid;
+@dynamic listName;
 
 @end

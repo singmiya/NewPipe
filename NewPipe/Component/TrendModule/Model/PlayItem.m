@@ -191,9 +191,13 @@
         }
         item.vid = [lookUpDivs[0] text];
         // 解析img
-        NSArray *thumbs = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@src"];
-        if (thumbs.count > 0) {
-            item.imgurl = [thumbs[0] text];
+        NSArray *thumbs1 = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@src"];
+        NSArray *thumbs2 = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@data-thumb"];
+        if (thumbs1.count > 0) {
+            item.imgurl = [thumbs1[0] text];
+            if ([item.imgurl hasSuffix:@".gif"]) {
+                item.imgurl = [thumbs2[0] text];
+            }
         }
         // 解析duration
         NSArray *durations = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/span"];

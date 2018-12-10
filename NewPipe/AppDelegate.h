@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ZJDrawerController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
-
 @property (strong, nonatomic) UIWindow *window;
-
-
+@property (nonatomic, strong) ZJDrawerController *drawer;
 @end
 

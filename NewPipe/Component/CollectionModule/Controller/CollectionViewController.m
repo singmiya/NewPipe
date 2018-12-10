@@ -34,7 +34,7 @@ static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellId
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [SVProgressHUD showWithStatus:@"加载中..."];
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
     self.dataSource = [CollectionItem MR_findAllSortedBy:@"updateTime" ascending:NO];
     [self.tableView reloadData];
     [SVProgressHUD dismiss];

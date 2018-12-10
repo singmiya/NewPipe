@@ -20,7 +20,7 @@
 @property (strong, nonatomic) UILabel *dislikeLabel;
 @property (nonatomic, strong) UILabel *sectionLabel;
 @property (nonatomic, strong) UIButton *addBtn;
-@property (nonatomic, strong) UIButton *bgPlayBtn;
+@property (nonatomic, strong) UIButton *praiseBtn;
 @end
 
 @implementation HeadView
@@ -34,7 +34,7 @@
         [self addSubview:self.dislikeLabel];
         [self addSubview:self.sectionLabel];
         [self addSubview:self.addBtn];
-        [self addSubview:self.bgPlayBtn];
+        [self addSubview:self.praiseBtn];
         [self updateFrames];
     }
     return self;
@@ -49,14 +49,14 @@
     self.likeLabel.attributedText = [self getAttributedString:self.likeLabel.text withImg:@"like"];
     self.dislikeLabel.text = [info.dislikeNums convertNumber];
     self.dislikeLabel.attributedText = [self getAttributedString:self.dislikeLabel.text withImg:@"dislike"];
-    self.sectionLabel.text = @"即将播放";
-    [self.addBtn setTitle:@"收藏" forState:UIControlStateNormal];
+    self.sectionLabel.text = NSLocalizedString(@"PlayList", nil);
+    [self.addBtn setTitle:NSLocalizedString(@"Collection", nil) forState:UIControlStateNormal];
     [_addBtn setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
     [self setButtonImageAndTitleWithSpace:5 WithButton:self.addBtn];
     
-    [self.bgPlayBtn setTitle:@"后台播放" forState:UIControlStateNormal];
-    [_bgPlayBtn setImage:[UIImage imageNamed:@"ej"] forState:UIControlStateNormal];
-    [self setButtonImageAndTitleWithSpace:5 WithButton:self.bgPlayBtn];
+    [self.praiseBtn setTitle:NSLocalizedString(@"Praise", nil) forState:UIControlStateNormal];
+    [_praiseBtn setImage:[UIImage imageNamed:@"praise"] forState:UIControlStateNormal];
+    [self setButtonImageAndTitleWithSpace:5 WithButton:self.praiseBtn];
     [self updateFrames];
 }
 
@@ -102,10 +102,10 @@
     
     x = 2 * x;
     frame = CGRectMake(x, y, w, 30);
-    self.bgPlayBtn.frame = frame;
+    self.praiseBtn.frame = frame;
 
     x = 10;
-    y = CGRectGetMaxY(self.bgPlayBtn.frame) + 20;
+    y = CGRectGetMaxY(self.praiseBtn.frame) + 20;
     w = CGRectGetWidth(self.frame) - 10;
     frame = CGRectMake(x, y, w, 25);
     self.sectionLabel.frame = frame;
@@ -118,9 +118,9 @@
         self.addBtnCallBack();
     }
 }
-- (void)bgPlayBtnDidClick:(id)sender {
-    if (self.bgPlayBtnCallBack) {
-        self.bgPlayBtnCallBack();
+- (void)praiseBtnDidClick:(id) sender {
+    if (self.praiseBtnCallBack) {
+        self.praiseBtnCallBack();
     }
 }
 
@@ -200,13 +200,13 @@
     return _addBtn;
 }
 
-- (UIButton *)bgPlayBtn {
-    if (!_bgPlayBtn) {
-        _bgPlayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_bgPlayBtn setTintColor:[UIColor whiteColor]];
-        [_bgPlayBtn addTarget:self action:@selector(bgPlayBtnDidClick:) forControlEvents:UIControlEventTouchUpInside];
+- (UIButton *)praiseBtn {
+    if (!_praiseBtn) {
+        _praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_praiseBtn setTintColor:[UIColor whiteColor]];
+        [_praiseBtn addTarget:self action:@selector(praiseBtnDidClick:) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _bgPlayBtn;
+    return _praiseBtn;
 }
 
 /**

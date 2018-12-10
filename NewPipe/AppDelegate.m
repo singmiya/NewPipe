@@ -25,15 +25,15 @@
     [MagicalRecord setupAutoMigratingCoreDataStack];
     MainTabController *mainTab = [[MainTabController alloc] init];
     SettingViewController *settingVC = [[SettingViewController alloc] init];
-    ZJDrawerController *drawer = [[ZJDrawerController alloc] initWithLeftController:settingVC centerController:mainTab rightController:nil];
+    self.drawer = [[ZJDrawerController alloc] initWithLeftController:settingVC centerController:mainTab rightController:nil];
     // 背景图片
-    drawer.backgroundImage = [UIImage imageNamed:@"bg"];
+    self.drawer.backgroundImage = [UIImage imageNamed:@"bg"];
     // 动画类型
-    drawer.drawerControllerStyle = ZJDrawerControllerStyleScale;
+    self.drawer.drawerControllerStyle = ZJDrawerControllerStyleScale;
     // 任何界面都能打开抽屉
-    drawer.canOpenDrawerAtAnyPage = YES;
-    drawer.maxLeftControllerWidth = 250;
-    self.window.rootViewController  = drawer;
+    self.drawer.canOpenDrawerAtAnyPage = YES;
+    self.drawer.maxLeftControllerWidth = 250;
+    self.window.rootViewController  = self.drawer;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyWindow];
     return YES;
@@ -61,6 +61,16 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 只有打开应用的时候才出现
+//        static dispatch_once_t onceToken;
+//        dispatch_once(&onceToken, ^{
+//            [self.drawer openLeftDrawerAnimated:NO finishHandler:nil];
+//        });
+        // 应用从后台进入到前台都出现
+        [self.drawer openLeftDrawerAnimated:YES finishHandler:nil];
+    });
+    
 }
 
 

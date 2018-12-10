@@ -50,6 +50,7 @@
 		E753FFF42189487700A68F51 /* ZFPortraitControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = E753FFDF2189487600A68F51 /* ZFPortraitControlView.m */; };
 		E753FFF52189487700A68F51 /* UIImageView+ZFCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E753FFE02189487600A68F51 /* UIImageView+ZFCache.m */; };
 		E753FFF62189487700A68F51 /* KSMediaPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E753FFE42189487700A68F51 /* KSMediaPlayerManager.m */; };
+		E755690721BD4BDB00520D61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E755690921BD4BDB00520D61 /* Localizable.strings */; };
 		E76DD05C217DA40A000F1286 /* ytb.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E76DD05A217DA40A000F1286 /* ytb.xcdatamodeld */; };
 		E79086AC21871C2000BA9B51 /* trending1.html in Resources */ = {isa = PBXBuildFile; fileRef = E79086AB21871C2000BA9B51 /* trending1.html */; };
 		E793BBBA21A1BD9700C2657E /* ZJDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E793BBB921A1BD9600C2657E /* ZJDrawerController.m */; };
@@ -169,6 +170,10 @@
 		E753FFE22189487600A68F51 /* ZFLandScapeControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFLandScapeControlView.h; sourceTree = "<group>"; };
 		E753FFE42189487700A68F51 /* KSMediaPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMediaPlayerManager.m; sourceTree = "<group>"; };
 		E753FFE52189487700A68F51 /* KSMediaPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMediaPlayerManager.h; sourceTree = "<group>"; };
+		E755690321BD4B8100520D61 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		E755690421BD4B8100520D61 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		E755690821BD4BDB00520D61 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E755690B21BD56F000520D61 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E76DD05B217DA40A000F1286 /* ytb.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ytb.xcdatamodel; sourceTree = "<group>"; };
 		E79086AB21871C2000BA9B51 /* trending1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = trending1.html; sourceTree = "<group>"; };
 		E793BBB821A1BD9600C2657E /* ZJDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJDrawerController.h; sourceTree = "<group>"; };
@@ -373,6 +378,7 @@
 				E747BEC62172DC2C00A05623 /* Info.plist */,
 				E747BEC12172DC2C00A05623 /* Assets.xcassets */,
 				E717B33C2192E2BC008F09B3 /* search.html */,
+				E755690921BD4BDB00520D61 /* Localizable.strings */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -540,6 +546,13 @@
 			path = KSYMediaPlayer;
 			sourceTree = "<group>";
 		};
+		E755690221BD343C00520D61 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		E76DD059217DA39A000F1286 /* coredb */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,7 +564,7 @@
 		E79FD1B621744A0B0045589B /* RecommendModule */ = {
 			isa = PBXGroup;
 			children = (
-				E79FD1BA21744A390045589B /* Model */,
+				E755690221BD343C00520D61 /* Model */,
 				E79FD1B921744A320045589B /* Controller */,
 				E79FD1B821744A2B0045589B /* View */,
 			);
@@ -585,13 +598,6 @@
 				E79FD1D321744D4B0045589B /* RecommendViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		E79FD1BA21744A390045589B /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		E79FD1BB21744A420045589B /* View */ = {
@@ -769,6 +775,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = E747BEAC2172DC2A00A05623;
 			productRefGroup = E747BEB62172DC2A00A05623 /* Products */;
@@ -790,6 +797,7 @@
 				E717B33D2192E2BC008F09B3 /* search.html in Resources */,
 				E747BEC52172DC2C00A05623 /* LaunchScreen.storyboard in Resources */,
 				E71BF29B2188471100FEC428 /* TrendingTableViewCell.xib in Resources */,
+				E755690721BD4BDB00520D61 /* Localizable.strings in Resources */,
 				E747BEC22172DC2C00A05623 /* Assets.xcassets in Resources */,
 				E71BF2962188334900FEC428 /* hqdefault.jpg in Resources */,
 				E753FFEE2189487700A68F51 /* ZFPlayer.bundle in Resources */,
@@ -949,6 +957,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				E747BEBF2172DC2A00A05623 /* Base */,
+				E755690421BD4B8100520D61 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -957,8 +966,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				E747BEC42172DC2C00A05623 /* Base */,
+				E755690321BD4B8100520D61 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E755690921BD4BDB00520D61 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E755690821BD4BDB00520D61 /* en */,
+				E755690B21BD56F000520D61 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -968,6 +987,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1026,6 +1046,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1080,9 +1101,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = N6D9A5K3PR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4XYM9K6GMH;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1117,8 +1138,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sings.NewPipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b60befde-130a-4890-8ee6-8d4c03d0c2e0";
-				PROVISIONING_PROFILE_SPECIFIER = distri_provisioning;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1129,9 +1150,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = N6D9A5K3PR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4XYM9K6GMH;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1157,8 +1178,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sings.NewPipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b60befde-130a-4890-8ee6-8d4c03d0c2e0";
-				PROVISIONING_PROFILE_SPECIFIER = distri_provisioning;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

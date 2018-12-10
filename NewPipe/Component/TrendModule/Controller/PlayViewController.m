@@ -25,7 +25,7 @@
 #import "HeadView.h"
 #import "VideoInfo.h"
 #import "SVProgressHUD+Util.h"
-#import "CollectionItem+CoreDataClass.h"
+#import "CollectionItem+CoreDataClass.h"
 #import <MagicalRecord/MagicalRecord.h>
 #import "Constant.h"
 
@@ -81,38 +81,53 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     };
     // 点击收藏按钮的回调
     self.headView.addBtnCallBack = ^(void) {
-        [SVProgressHUD show];
         @strongify(self)
-        __block BOOL has_one = NO;
-        [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext * _Nonnull localContext) {
-            CollectionItem *item = [CollectionItem MR_findFirstByAttribute:@"vid" withValue:self.item.vid inContext:localContext];
-            if (item) {
-                has_one = YES;
-                item.updateTime = [NSDate date];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Title", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addTextFieldWithConfigurationHandler:nil];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [SVProgressHUD show];
+            __block int show_type = 2;
+            if (alertController.textFields.firstObject.text.length <= 0) {
                 return;
             }
-            item = [CollectionItem MR_createEntityInContext:localContext];
-            item.vid = self.item.vid;
-            item.title = self.item.title;
-            item.imgurl = self.item.imgurl;
-            item.author = self.item.channelName;
-            item.playnum = self.item.playnum;
-            item.badnum = self.item.badnum;
-            item.goodnum = self.item.goodnum;
-            item.lasttime = self.item.lasttime;
-            item.duration = self.item.duration;
-            item.createTime = [NSDate date];
-            item.updateTime = [NSDate date];
-        }];
-        if (has_one) {
-            [SVProgressHUD showInfoWithStatus:@"此视频已收藏过"];
-        } else {
-            [SVProgressHUD showSuccessWithStatus:@"已收藏"];
-        }
+            
+            [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext * _Nonnull localContext) {
+                CollectionItem *item = [CollectionItem MR_findFirstByAttribute:@"vid" withValue:self.item.vid inContext:localContext];
+                if (item) {
+                    show_type = 0; // 已收藏
+                    item.updateTime = [NSDate date];
+                    return;
+                }
+                show_type = 1;
+                item = [CollectionItem MR_createEntityInContext:localContext];
+                item.vid = self.item.vid;
+                item.title = self.item.title;
+                item.imgurl = self.item.imgurl;
+                item.author = self.item.channelName;
+                item.playnum = self.item.playnum;
+                item.badnum = self.item.badnum;
+                item.goodnum = self.item.goodnum;
+                item.lasttime = self.item.lasttime;
+                item.duration = self.item.duration;
+                item.createTime = [NSDate date];
+                item.updateTime = [NSDate date];
+                item.listName = alertController.textFields.firstObject.text;
+            }];
+            if (show_type == 0) {
+                [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"ListOver", nil)];
+            } else if (show_type == 1) {
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Collected", nil)];
+            } else {
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"NotNull", nil)];
+            }
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
     };
-    self.headView.bgPlayBtnCallBack = ^(void) {
-        @strongify(self)
-        self.player.pauseWhenAppResignActive = NO;
+    self.headView.praiseBtnCallBack = ^(void) {
+#pragma TODO 好评跳转
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1078688750"]];
     };
     [self.containerView setImageWithURLString:self.item.imgurl placeholder:nil];
     
@@ -134,7 +149,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
         self.currentPlayIndex ++;
         // 自动播放下一首
         if (self.currentPlayIndex >= self.dataSource.count) {
-            [SVProgressHUD showInfoWithStatus:@"列表播放完毕"];
+            [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"ListOver", nil)];
             return;
         }
         PlayItem *newItem = self.dataSource[self.currentPlayIndex];
@@ -197,7 +212,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 #pragma mark- methouds
 
 - (void)playVideo {
-    [SVProgressHUD showWithStatus:@"Loading..."];
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
     [VideoInfo getVideoInfo:^(VideoInfo *videoInfo) {
         dispatch_async(dispatch_get_main_queue(), ^{
             //刷新界面
@@ -225,14 +240,14 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
             } else {
 //                NSError *noStreamError = [NSError errorWithDomain:XCDYouTubeVideoErrorDomain code:XCDYouTubeErrorNoStreamAvailable userInfo:nil];
                 // 出错
-                [SVProgressHUD showInfoWithStatus:@"Video is unavailable！"];
+                [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"VideoUnavailable", nil)];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self dismissViewControllerAnimated:YES completion:nil];
                 });
             }
         } else {
             // 出错
-            [SVProgressHUD showInfoWithStatus:@"Video is unavailable！"];
+            [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"VideoUnavailable", nil)];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self dismissViewControllerAnimated:YES completion:nil];
             });
