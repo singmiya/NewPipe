@@ -17,10 +17,13 @@
 #import "CollectionItem+CoreDataClass.h"
 #import "Constant.h"
 
-static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellIdentifier";
-@interface CollectionViewController ()<UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, copy) NSArray *dataSource;
+static NSString *const cellId = @"cellId";
+static NSString *const headerId = @"headerId";
+static NSString *const footerId = @"footerId";
+
+@interface CollectionViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) NSFetchedResultsController *fetchRetVC;
 @end
 
 @implementation CollectionViewController
@@ -29,14 +32,14 @@ static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellId
     [super viewDidLoad];
     [SVProgressHUD themeConfigContainerView:self.view];
     // Do any additional setup after loading the view.
-    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.collectionView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
-    self.dataSource = [CollectionItem MR_findAllSortedBy:@"updateTime" ascending:NO];
-    [self.tableView reloadData];
+     self.fetchRetVC = [CollectionItem MR_fetchAllGroupedBy:@"listName" withPredicate:nil sortedBy:@"updateTime" ascending:NO];
+    [self.collectionView reloadData];
     [SVProgressHUD dismiss];
 }
 
@@ -44,58 +47,123 @@ static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellId
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//----- init table view
-- (UITableView *)tableView {
-    if(!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds) - kStatusBarHeight - 49) style:UITableViewStylePlain];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.backgroundColor = [UIColor clearColor];
-        UINib *nib = [UINib nibWithNibName:@"CollectionTableViewCell" bundle:nil];
-        [_tableView registerNib:nib forCellReuseIdentifier:CollectionTableViewCellIdentifier];
-        _tableView.tableFooterView = [UIView new];
-        _tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
-        _tableView.separatorColor = UICOLOR_HEX(0x404040);
+//----- init collection view
+- (UICollectionView *)collectionView {
+    if (!_collectionView) {
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds) - kStatusBarHeight - 49) collectionViewLayout:layout];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        _collectionView.backgroundColor = [UIColor clearColor];
     }
-    return _tableView;
+    return _collectionView;
 }
 
 #pragma mark -
-#pragma mark - UITableViewDataSource
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataSource.count;
+#pragma mark - UICollectionViewDataSource
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (!self.fetchRetVC || !self.fetchRetVC.fetchedObjects) {
+        return 0;
+    }
+    return self.fetchRetVC.fetchedObjects.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CollectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CollectionTableViewCellIdentifier];
-    [cell configCellData:self.dataSource[indexPath.row]];
-    return cell;
+// 和UITableView类似，UICollectionView也可设置段头段尾
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if([kind isEqualToString:UICollectionElementKindSectionHeader])
+    {
+        UICollectionReusableView *headerView = [_collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerId forIndexPath:indexPath];
+        if(headerView == nil)
+        {
+            headerView = [[UICollectionReusableView alloc] init];
+        }
+        headerView.backgroundColor = [UIColor grayColor];
+        
+        return headerView;
+    }
+    else if([kind isEqualToString:UICollectionElementKindSectionFooter])
+    {
+        UICollectionReusableView *footerView = [_collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:footerId forIndexPath:indexPath];
+        if(footerView == nil)
+        {
+            footerView = [[UICollectionReusableView alloc] init];
+        }
+        footerView.backgroundColor = [UIColor lightGrayColor];
+        
+        return footerView;
+    }
+    
+    return nil;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
 }
 #pragma mark -
-#pragma mark - UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - UICollectionViewDelegate
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return (CGSize){0,0};
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UITableViewAutomaticDimension;
+    return UIEdgeInsetsMake(5, 5, 5, 5);
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PlayViewController *playVC = [PlayViewController new];
-    CollectionItem *cItem = self.dataSource[indexPath.row];
-    PlayItem *pItem = [[PlayItem alloc] init];
-    pItem.vid = cItem.vid;
-    pItem.title = cItem.title;
-    pItem.channelName = cItem.author;
-    pItem.imgurl = cItem.imgurl;
-    pItem.goodnum = cItem.goodnum;
-    pItem.playnum = cItem.playnum;
-    pItem.badnum = cItem.badnum;
-    playVC.item = pItem;
-    [self presentViewController:playVC animated:YES completion:nil];
+
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 5.f;
+}
+
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 5.f;
+}
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    return (CGSize){0,44};
+}
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+{
+    return (CGSize){0,22};
+}
+
+
+
+
+#pragma mark ---- UICollectionViewDelegate
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+// 点击高亮
+- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor greenColor];
+}
+
+
+// 选中某item
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
 }
 
 @end

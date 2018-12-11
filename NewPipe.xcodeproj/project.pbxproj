@@ -17,6 +17,10 @@
 		E71BF2962188334900FEC428 /* hqdefault.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E71BF2952188334900FEC428 /* hqdefault.jpg */; };
 		E71BF29A2188471100FEC428 /* TrendingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E71BF2982188471100FEC428 /* TrendingTableViewCell.m */; };
 		E71BF29B2188471100FEC428 /* TrendingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E71BF2992188471100FEC428 /* TrendingTableViewCell.xib */; };
+		E73D15DF21BFE99100A8DD7C /* PlayListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E73D15DE21BFE99100A8DD7C /* PlayListViewController.m */; };
+		E73D15E221BFEAFE00A8DD7C /* BaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E73D15E121BFEAFE00A8DD7C /* BaseCollectionViewCell.m */; };
+		E73D15E621BFEEBB00A8DD7C /* PlayItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E73D15E421BFEEBB00A8DD7C /* PlayItemCollectionViewCell.m */; };
+		E73D15E721BFEEBB00A8DD7C /* PlayItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E73D15E521BFEEBB00A8DD7C /* PlayItemCollectionViewCell.xib */; };
 		E747BEBA2172DC2A00A05623 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E747BEB92172DC2A00A05623 /* AppDelegate.m */; };
 		E747BEC02172DC2A00A05623 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E747BEBE2172DC2A00A05623 /* Main.storyboard */; };
 		E747BEC22172DC2C00A05623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E747BEC12172DC2C00A05623 /* Assets.xcassets */; };
@@ -104,6 +108,13 @@
 		E71BF2972188471100FEC428 /* TrendingTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrendingTableViewCell.h; sourceTree = "<group>"; };
 		E71BF2982188471100FEC428 /* TrendingTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrendingTableViewCell.m; sourceTree = "<group>"; };
 		E71BF2992188471100FEC428 /* TrendingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrendingTableViewCell.xib; sourceTree = "<group>"; };
+		E73D15DD21BFE99100A8DD7C /* PlayListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayListViewController.h; sourceTree = "<group>"; };
+		E73D15DE21BFE99100A8DD7C /* PlayListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayListViewController.m; sourceTree = "<group>"; };
+		E73D15E021BFEAFE00A8DD7C /* BaseCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseCollectionViewCell.h; sourceTree = "<group>"; };
+		E73D15E121BFEAFE00A8DD7C /* BaseCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseCollectionViewCell.m; sourceTree = "<group>"; };
+		E73D15E321BFEEBB00A8DD7C /* PlayItemCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayItemCollectionViewCell.h; sourceTree = "<group>"; };
+		E73D15E421BFEEBB00A8DD7C /* PlayItemCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayItemCollectionViewCell.m; sourceTree = "<group>"; };
+		E73D15E521BFEEBB00A8DD7C /* PlayItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayItemCollectionViewCell.xib; sourceTree = "<group>"; };
 		E747BEB52172DC2A00A05623 /* NewPipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewPipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E747BEB82172DC2A00A05623 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E747BEB92172DC2A00A05623 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -441,6 +452,8 @@
 			children = (
 				E747BF0F21731C9700A05623 /* BaseTableViewCell.h */,
 				E747BF1021731C9700A05623 /* BaseTableViewCell.m */,
+				E73D15E021BFEAFE00A8DD7C /* BaseCollectionViewCell.h */,
+				E73D15E121BFEAFE00A8DD7C /* BaseCollectionViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -606,6 +619,9 @@
 				E7D051ED21957C18007A96BD /* CollectionTableViewCell.h */,
 				E7D051EE21957C18007A96BD /* CollectionTableViewCell.m */,
 				E7D051EC21957C18007A96BD /* CollectionTableViewCell.xib */,
+				E73D15E321BFEEBB00A8DD7C /* PlayItemCollectionViewCell.h */,
+				E73D15E421BFEEBB00A8DD7C /* PlayItemCollectionViewCell.m */,
+				E73D15E521BFEEBB00A8DD7C /* PlayItemCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -615,6 +631,8 @@
 			children = (
 				E79FD1C221744AF20045589B /* CollectionViewController.h */,
 				E79FD1C321744AF20045589B /* CollectionViewController.m */,
+				E73D15DD21BFE99100A8DD7C /* PlayListViewController.h */,
+				E73D15DE21BFE99100A8DD7C /* PlayListViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -801,6 +819,7 @@
 				E747BEC22172DC2C00A05623 /* Assets.xcassets in Resources */,
 				E71BF2962188334900FEC428 /* hqdefault.jpg in Resources */,
 				E753FFEE2189487700A68F51 /* ZFPlayer.bundle in Resources */,
+				E73D15E721BFEEBB00A8DD7C /* PlayItemCollectionViewCell.xib in Resources */,
 				E79086AC21871C2000BA9B51 /* trending1.html in Resources */,
 				E7D051EF21957C18007A96BD /* CollectionTableViewCell.xib in Resources */,
 				E7B99823217CCC66006C32F3 /* data.html in Resources */,
@@ -891,6 +910,7 @@
 				E747BF092173171900A05623 /* VideoItemTableViewCell.m in Sources */,
 				E753FFF12189487700A68F51 /* ZFSmallFloatControlView.m in Sources */,
 				E753FFF32189487700A68F51 /* ZFSpeedLoadingView.m in Sources */,
+				E73D15E221BFEAFE00A8DD7C /* BaseCollectionViewCell.m in Sources */,
 				E753FFE82189487700A68F51 /* ZFAVPlayerManager.m in Sources */,
 				E747BF1421733CAC00A05623 /* PlayViewController.m in Sources */,
 				E747BF032172E6A500A05623 /* DataSourceManager.m in Sources */,
@@ -901,6 +921,7 @@
 				E753FFF02189487700A68F51 /* ZFPlayerControlView.m in Sources */,
 				E7F0BB7E218D9A7B00DD1FF9 /* SVProgressHUD+Util.m in Sources */,
 				E753FFF42189487700A68F51 /* ZFPortraitControlView.m in Sources */,
+				E73D15DF21BFE99100A8DD7C /* PlayListViewController.m in Sources */,
 				E79FD1C721744BC20045589B /* BaseTabController.m in Sources */,
 				E753FFEB2189487700A68F51 /* ZFVolumeBrightnessView.m in Sources */,
 				E753FFEA2189487700A68F51 /* UIView+ZFFrame.m in Sources */,
@@ -916,6 +937,7 @@
 				E747BF1121731C9700A05623 /* BaseTableViewCell.m in Sources */,
 				E753FFED2189487700A68F51 /* ZFNetworkSpeedMonitor.m in Sources */,
 				E747BEBA2172DC2A00A05623 /* AppDelegate.m in Sources */,
+				E73D15E621BFEEBB00A8DD7C /* PlayItemCollectionViewCell.m in Sources */,
 				E7F0BB7B218D94EA00DD1FF9 /* NSString+Util.m in Sources */,
 				2EBD9CA210C2F565ADC03D32 /* PlayItem.m in Sources */,
 			);

@@ -115,7 +115,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
                 item.listName = alertController.textFields.firstObject.text;
             }];
             if (show_type == 0) {
-                [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"ListOver", nil)];
+                [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"HasCollected", nil)];
             } else if (show_type == 1) {
                 [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Collected", nil)];
             } else {
