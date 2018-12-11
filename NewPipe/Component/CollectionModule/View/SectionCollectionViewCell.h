@@ -1,5 +1,5 @@
 //
-//  PlayItemCollectionViewCell.h
+//  SectionCollectionViewCell.h
 //  NewPipe
 //
 //  Created by Somiya on 2018/12/11.
@@ -8,6 +8,6 @@
 
 #import "BaseCollectionViewCell.h"
 
-@interface PlayItemCollectionViewCell : BaseCollectionViewCell
-
+@interface SectionCollectionViewCell : BaseCollectionViewCell
+- (void)configCellData:(id)data title:(NSString *)title;
 @end

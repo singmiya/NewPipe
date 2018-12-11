@@ -11,11 +11,12 @@
 #import "SVProgressHUD.h"
 #import "ColorUtil.h"
 #import "PlayViewController.h"
-#import "CollectionTableViewCell.h"
+#import "SectionCollectionViewCell.h"
 #import <MagicalRecord/MagicalRecord.h>
 #import "PlayItem.h"
 #import "CollectionItem+CoreDataClass.h"
 #import "Constant.h"
+#import "PlayListViewController.h"
 
 static NSString *const cellId = @"cellId";
 static NSString *const headerId = @"headerId";
@@ -39,6 +40,7 @@ static NSString *const footerId = @"footerId";
     [super viewWillAppear:animated];
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
      self.fetchRetVC = [CollectionItem MR_fetchAllGroupedBy:@"listName" withPredicate:nil sortedBy:@"updateTime" ascending:NO];
+
     [self.collectionView reloadData];
     [SVProgressHUD dismiss];
 }
@@ -54,6 +56,8 @@ static NSString *const footerId = @"footerId";
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds) - kStatusBarHeight - 49) collectionViewLayout:layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        UINib *nib = [UINib nibWithNibName:@"SectionCollectionViewCell" bundle:nil];
+        [_collectionView registerNib:nib forCellWithReuseIdentifier:cellId];
         _collectionView.backgroundColor = [UIColor clearColor];
     }
     return _collectionView;
@@ -65,41 +69,47 @@ static NSString *const footerId = @"footerId";
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (!self.fetchRetVC || !self.fetchRetVC.fetchedObjects) {
+    if (!self.fetchRetVC || !self.fetchRetVC.sections) {
         return 0;
     }
-    return self.fetchRetVC.fetchedObjects.count;
+    return self.fetchRetVC.sections.count;
 }
 
-// 和UITableView类似，UICollectionView也可设置段头段尾
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    
-    if([kind isEqualToString:UICollectionElementKindSectionHeader])
-    {
-        UICollectionReusableView *headerView = [_collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerId forIndexPath:indexPath];
-        if(headerView == nil)
-        {
-            headerView = [[UICollectionReusableView alloc] init];
-        }
-        headerView.backgroundColor = [UIColor grayColor];
-        
-        return headerView;
-    }
-    else if([kind isEqualToString:UICollectionElementKindSectionFooter])
-    {
-        UICollectionReusableView *footerView = [_collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:footerId forIndexPath:indexPath];
-        if(footerView == nil)
-        {
-            footerView = [[UICollectionReusableView alloc] init];
-        }
-        footerView.backgroundColor = [UIColor lightGrayColor];
-        
-        return footerView;
-    }
-    
-    return nil;
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    SectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    [cell configCellData:self.fetchRetVC.sections[indexPath.row].objects.firstObject title:self.fetchRetVC.sections[indexPath.row].name];
+    return cell;
 }
+
+//// 和UITableView类似，UICollectionView也可设置段头段尾
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+//{
+//
+//    if([kind isEqualToString:UICollectionElementKindSectionHeader])
+//    {
+//        UICollectionReusableView *headerView = [_collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerId forIndexPath:indexPath];
+//        if(headerView == nil)
+//        {
+//            headerView = [[UICollectionReusableView alloc] init];
+//        }
+//        headerView.backgroundColor = [UIColor grayColor];
+//
+//        return headerView;
+//    }
+//    else if([kind isEqualToString:UICollectionElementKindSectionFooter])
+//    {
+//        UICollectionReusableView *footerView = [_collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:footerId forIndexPath:indexPath];
+//        if(footerView == nil)
+//        {
+//            footerView = [[UICollectionReusableView alloc] init];
+//        }
+//        footerView.backgroundColor = [UIColor lightGrayColor];
+//
+//        return footerView;
+//    }
+//
+//    return nil;
+//}
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -109,7 +119,7 @@ static NSString *const footerId = @"footerId";
 #pragma mark - UICollectionViewDelegate
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (CGSize){0,0};
+    return (CGSize){CGRectGetWidth(self.view.frame), CGRectGetWidth(self.view.frame) / 1.7 + 60};
 }
 
 
@@ -156,7 +166,10 @@ static NSString *const footerId = @"footerId";
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor greenColor];
+//    cell.backgroundColor = [UIColor greenColor];
+    PlayListViewController *plVc = [[PlayListViewController alloc] init];
+    plVc.dataSource = self.fetchRetVC.sections[indexPath.row].objects;
+    [self presentViewController:plVc animated:YES completion:nil];
 }
 
 

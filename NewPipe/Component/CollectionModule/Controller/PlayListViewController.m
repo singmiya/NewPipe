@@ -20,8 +20,6 @@
 static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellIdentifier";
 @interface PlayListViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, copy) NSArray *dataSource;
-
 @end
 
 @implementation PlayListViewController
@@ -35,12 +33,10 @@ static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellId
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
-    self.dataSource = [CollectionItem MR_findAllSortedBy:@"updateTime" ascending:NO];
-    NSFetchedResultsController *fetchRetVC = [CollectionItem MR_fetchAllGroupedBy:@"listName" withPredicate:nil sortedBy:@"updateTime" ascending:NO];
-    //    fetchRetVC.fetchedObjects;
-    [self.tableView reloadData];
-    [SVProgressHUD dismiss];
+//    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
+//    self.dataSource = [CollectionItem MR_findAllSortedBy:@"updateTime" ascending:NO];
+//    [self.tableView reloadData];
+//    [SVProgressHUD dismiss];
 }
 
 - (void)didReceiveMemoryWarning {

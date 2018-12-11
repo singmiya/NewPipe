@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface PlayListViewController : BaseViewController
-
+@property (nonatomic, copy) NSArray *dataSource;
 @end

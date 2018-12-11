@@ -2,7 +2,7 @@
 //  CollectionItem+CoreDataProperties.m
 //  
 //
-//  Created by Somiya on 2018/12/10.
+//  Created by guolinan on 2018/12/11.
 //
 //
 
@@ -21,10 +21,11 @@
 @dynamic goodnum;
 @dynamic imgurl;
 @dynamic lasttime;
+@dynamic listName;
 @dynamic playnum;
 @dynamic title;
 @dynamic updateTime;
 @dynamic vid;
-@dynamic listName;
+@dynamic avatarImgUrl;
 
 @end

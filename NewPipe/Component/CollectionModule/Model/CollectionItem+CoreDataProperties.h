@@ -2,7 +2,7 @@
 //  CollectionItem+CoreDataProperties.h
 //  
 //
-//  Created by Somiya on 2018/12/10.
+//  Created by guolinan on 2018/12/11.
 //
 //
 
@@ -22,11 +22,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *goodnum;
 @property (nullable, nonatomic, copy) NSString *imgurl;
 @property (nullable, nonatomic, copy) NSString *lasttime;
+@property (nullable, nonatomic, copy) NSString *listName;
 @property (nullable, nonatomic, copy) NSString *playnum;
 @property (nullable, nonatomic, copy) NSString *title;
 @property (nullable, nonatomic, copy) NSDate *updateTime;
 @property (nullable, nonatomic, copy) NSString *vid;
-@property (nullable, nonatomic, copy) NSString *listName;
+@property (nullable, nonatomic, copy) NSString *avatarImgUrl;
 
 @end
 

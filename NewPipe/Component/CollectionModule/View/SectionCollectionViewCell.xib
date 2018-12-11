@@ -13,7 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="PlayItemCollectionViewCell">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SectionCollectionViewCell">
             <rect key="frame" x="0.0" y="0.0" width="375" height="281"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -65,6 +65,12 @@
                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2m3-Bb-kl4">
+                        <rect key="frame" x="364" y="209" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.84842535620000004" green="0.84842535620000004" blue="0.84842535620000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -72,6 +78,7 @@
                 <constraint firstItem="gsF-4a-aKY" firstAttribute="leading" secondItem="1Qn-Yz-hwC" secondAttribute="trailing" constant="8" id="0o3-xj-mQ0"/>
                 <constraint firstItem="e0f-ot-pVe" firstAttribute="top" secondItem="hhg-Rt-GV8" secondAttribute="top" id="3kA-5c-lby"/>
                 <constraint firstItem="1Qn-Yz-hwC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="6Pz-y5-EzQ"/>
+                <constraint firstAttribute="trailing" secondItem="2m3-Bb-kl4" secondAttribute="trailing" constant="11" id="7HJ-5t-MiY"/>
                 <constraint firstAttribute="bottom" secondItem="1Qn-Yz-hwC" secondAttribute="bottom" constant="8" id="ACa-39-wei"/>
                 <constraint firstAttribute="trailing" secondItem="gsF-4a-aKY" secondAttribute="trailing" id="Fqs-5j-v8X"/>
                 <constraint firstItem="gsF-4a-aKY" firstAttribute="top" secondItem="2d6-8d-hro" secondAttribute="bottom" constant="7.5" id="M8H-Sc-2tq"/>
@@ -81,6 +88,7 @@
                 <constraint firstItem="hhg-Rt-GV8" firstAttribute="top" secondItem="gsF-4a-aKY" secondAttribute="bottom" constant="1" id="Ug5-PX-XEf"/>
                 <constraint firstAttribute="bottom" secondItem="hhg-Rt-GV8" secondAttribute="bottom" constant="12" id="WFu-9l-GwJ"/>
                 <constraint firstAttribute="trailing" secondItem="2d6-8d-hro" secondAttribute="trailing" id="cEW-0D-z24"/>
+                <constraint firstItem="gsF-4a-aKY" firstAttribute="top" secondItem="2m3-Bb-kl4" secondAttribute="bottom" constant="19" id="koL-nn-gkT"/>
                 <constraint firstItem="2d6-8d-hro" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="lju-gC-cRu"/>
                 <constraint firstItem="JhK-wL-Kfl" firstAttribute="leading" secondItem="e0f-ot-pVe" secondAttribute="trailing" constant="2" id="qSe-o6-Pgn"/>
                 <constraint firstItem="JhK-wL-Kfl" firstAttribute="top" secondItem="hhg-Rt-GV8" secondAttribute="top" id="vUM-br-Yuk"/>
@@ -95,12 +103,13 @@
                 </mask>
             </variation>
             <connections>
-                <outlet property="headImgView" destination="1Qn-Yz-hwC" id="Nc3-F1-YCU"/>
+                <outlet property="durationLabel" destination="2m3-Bb-kl4" id="vEr-JH-Ubg"/>
+                <outlet property="headImgView" destination="1Qn-Yz-hwC" id="402-RA-RFc"/>
                 <outlet property="imgView" destination="2d6-8d-hro" id="Em4-uV-XGA"/>
-                <outlet property="nameLabel" destination="hhg-Rt-GV8" id="ZIW-LX-9pj"/>
-                <outlet property="timeLabel" destination="JhK-wL-Kfl" id="KFS-Xv-o6i"/>
-                <outlet property="titleLabel" destination="gsF-4a-aKY" id="fii-tV-TWG"/>
-                <outlet property="viewsLabel" destination="e0f-ot-pVe" id="TQe-g0-GtE"/>
+                <outlet property="nameLabel" destination="hhg-Rt-GV8" id="WZ2-N3-Q3d"/>
+                <outlet property="timeLabel" destination="JhK-wL-Kfl" id="chE-Ic-DAu"/>
+                <outlet property="titleLabel" destination="gsF-4a-aKY" id="JXc-QK-kSg"/>
+                <outlet property="viewsLabel" destination="e0f-ot-pVe" id="9NC-CS-cHf"/>
             </connections>
             <point key="canvasLocation" x="-10" y="-75"/>
         </collectionViewCell>

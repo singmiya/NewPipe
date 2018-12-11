@@ -44,7 +44,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 @property (nonatomic, strong) HeadView *headView;
 @property (nonatomic, strong) UIView *nextTrackAlertView;
 @property (nonatomic, assign) NSInteger currentPlayIndex;
-
+@property (nonatomic, strong) VideoInfo *currentVInfo;
 @end
 
 @implementation PlayViewController
@@ -110,6 +110,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
                 item.goodnum = self.item.goodnum;
                 item.lasttime = self.item.lasttime;
                 item.duration = self.item.duration;
+                item.avatarImgUrl = self.currentVInfo.avatarImgUrl;
                 item.createTime = [NSDate date];
                 item.updateTime = [NSDate date];
                 item.listName = alertController.textFields.firstObject.text;
@@ -216,6 +217,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     [VideoInfo getVideoInfo:^(VideoInfo *videoInfo) {
         dispatch_async(dispatch_get_main_queue(), ^{
             //刷新界面
+            self.currentVInfo = videoInfo;
             [self.headView configData:videoInfo];
             [self.tableView reloadData];
             NSLog(@"xxxxxxxxxxx%@", NSStringFromCGRect(self.headView.frame));
