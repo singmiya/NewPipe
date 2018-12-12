@@ -25,19 +25,22 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.durationLabel.layer.cornerRadius = 3;
-    self.durationLabel.layer.masksToBounds = YES;
+//    self.durationLabel.layer.cornerRadius = 3;
+//    self.durationLabel.layer.masksToBounds = YES;
+    self.durationLabel.hidden = YES;
+    _headImgView.layer.masksToBounds = YES;
+    _headImgView.layer.cornerRadius = 20;
     // Initialization code
 }
 - (void)configCellData:(id)data title:(NSString *)title {
     CollectionItem *item = (CollectionItem *)data;
-    _timeLabel.text = title;
+    _titleLabel.text = title;
     _nameLabel.text = item.author;
-    if (item.duration != nil) {
-        _durationLabel.text = [NSString stringWithFormat:@" %@ ", item.duration];
-    } else {
-        _durationLabel.hidden = YES;
-    }
+//    if (item.duration != nil) {
+//        _durationLabel.text = [NSString stringWithFormat:@" %@ ", item.duration];
+//    } else {
+//        _durationLabel.hidden = YES;
+//    }
     _viewsLabel.text = [NSString stringWithFormat:@"%@ views", [item.playnum convertNumber]];
     _timeLabel.text = item.lasttime;
     [_imgView sd_setImageWithURL:[NSURL URLWithString:item.imgurl]];

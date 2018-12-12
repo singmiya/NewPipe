@@ -34,6 +34,7 @@ static NSString *const footerId = @"footerId";
     [SVProgressHUD themeConfigContainerView:self.view];
     // Do any additional setup after loading the view.
     [self.view addSubview:self.collectionView];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -43,6 +44,7 @@ static NSString *const footerId = @"footerId";
 
     [self.collectionView reloadData];
     [SVProgressHUD dismiss];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,6 +60,8 @@ static NSString *const footerId = @"footerId";
         _collectionView.dataSource = self;
         UINib *nib = [UINib nibWithNibName:@"SectionCollectionViewCell" bundle:nil];
         [_collectionView registerNib:nib forCellWithReuseIdentifier:cellId];
+        [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerId];
+        [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerId];
         _collectionView.backgroundColor = [UIColor clearColor];
     }
     return _collectionView;
@@ -66,50 +70,40 @@ static NSString *const footerId = @"footerId";
 #pragma mark -
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (!self.fetchRetVC || !self.fetchRetVC.sections) {
         return 0;
     }
     return self.fetchRetVC.sections.count;
 }
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 1;
+}
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     SectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
-    [cell configCellData:self.fetchRetVC.sections[indexPath.row].objects.firstObject title:self.fetchRetVC.sections[indexPath.row].name];
+    [cell configCellData:self.fetchRetVC.sections[indexPath.section].objects.firstObject title:self.fetchRetVC.sections[indexPath.section].name];
     return cell;
 }
 
 //// 和UITableView类似，UICollectionView也可设置段头段尾
-//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-//{
-//
-//    if([kind isEqualToString:UICollectionElementKindSectionHeader])
-//    {
-//        UICollectionReusableView *headerView = [_collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerId forIndexPath:indexPath];
-//        if(headerView == nil)
-//        {
-//            headerView = [[UICollectionReusableView alloc] init];
-//        }
-//        headerView.backgroundColor = [UIColor grayColor];
-//
-//        return headerView;
-//    }
-//    else if([kind isEqualToString:UICollectionElementKindSectionFooter])
-//    {
-//        UICollectionReusableView *footerView = [_collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:footerId forIndexPath:indexPath];
-//        if(footerView == nil)
-//        {
-//            footerView = [[UICollectionReusableView alloc] init];
-//        }
-//        footerView.backgroundColor = [UIColor lightGrayColor];
-//
-//        return footerView;
-//    }
-//
-//    return nil;
-//}
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+
+    if([kind isEqualToString:UICollectionElementKindSectionHeader])
+    {
+        UICollectionReusableView *headerView = [_collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerId forIndexPath:indexPath];
+        headerView.backgroundColor = [UIColor grayColor];
+        return headerView;
+    }
+    else if([kind isEqualToString:UICollectionElementKindSectionFooter])
+    {
+        UICollectionReusableView *footerView = [_collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:footerId forIndexPath:indexPath];
+        footerView.backgroundColor = UICOLOR_HEX(0x404040);
+        return footerView;
+    }
+
+    return nil;
+}
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -119,7 +113,7 @@ static NSString *const footerId = @"footerId";
 #pragma mark - UICollectionViewDelegate
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (CGSize){CGRectGetWidth(self.view.frame), CGRectGetWidth(self.view.frame) / 1.7 + 60};
+    return (CGSize){CGRectGetWidth(self.view.frame) - 10, (CGRectGetWidth(self.view.frame) - 10) / 2 + 68};
 }
 
 
@@ -143,13 +137,13 @@ static NSString *const footerId = @"footerId";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return (CGSize){0,44};
+    return (CGSize){0,0};
 }
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    return (CGSize){0,22};
+    return (CGSize){0,1};
 }
 
 
@@ -165,11 +159,10 @@ static NSString *const footerId = @"footerId";
 // 点击高亮
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-//    cell.backgroundColor = [UIColor greenColor];
+//    UINavigationController *nav = [UINavigationController]
     PlayListViewController *plVc = [[PlayListViewController alloc] init];
     plVc.dataSource = self.fetchRetVC.sections[indexPath.row].objects;
-    [self presentViewController:plVc animated:YES completion:nil];
+    [self.navigationController pushViewController:plVc animated:YES];
 }
 
 

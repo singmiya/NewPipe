@@ -22,6 +22,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     // 初始化数据库
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     [MagicalRecord setupAutoMigratingCoreDataStack];
     MainTabController *mainTab = [[MainTabController alloc] init];
     SettingViewController *settingVC = [[SettingViewController alloc] init];

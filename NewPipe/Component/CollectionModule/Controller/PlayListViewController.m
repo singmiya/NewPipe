@@ -37,6 +37,14 @@ static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellId
 //    self.dataSource = [CollectionItem MR_findAllSortedBy:@"updateTime" ascending:NO];
 //    [self.tableView reloadData];
 //    [SVProgressHUD dismiss];
+     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+    self.navigationController.navigationBar.tintColor = UICOLOR_HEX(0xE54D42);
+//    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"pixel"] forBarMetrics:UIBarMetricsDefault]; // 导航栏背景设置为透明
+//    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"pixel"]]; //导航栏底部线条设为透明
+//    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:17], NSForegroundColorAttributeName: UICOLOR_RGB(0, 0, 0, 1)}];
+//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,14 +54,14 @@ static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellId
 //----- init table view
 - (UITableView *)tableView {
     if(!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds) - kStatusBarHeight - 49) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds)  - 49) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];
         UINib *nib = [UINib nibWithNibName:@"CollectionTableViewCell" bundle:nil];
         [_tableView registerNib:nib forCellReuseIdentifier:CollectionTableViewCellIdentifier];
         _tableView.tableFooterView = [UIView new];
-        _tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
+//        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         _tableView.separatorColor = UICOLOR_HEX(0x404040);
     }
     return _tableView;

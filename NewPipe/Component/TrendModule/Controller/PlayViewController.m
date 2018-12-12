@@ -258,6 +258,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 }
 
 - (void)backToList {
+    [self.player stop];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
