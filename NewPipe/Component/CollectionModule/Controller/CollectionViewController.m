@@ -11,12 +11,12 @@
 #import "SVProgressHUD.h"
 #import "ColorUtil.h"
 #import "PlayViewController.h"
-#import "SectionCollectionViewCell.h"
+#import "CollectionViewCell.h"
 #import <MagicalRecord/MagicalRecord.h>
 #import "PlayItem.h"
 #import "CollectionItem+CoreDataClass.h"
 #import "Constant.h"
-#import "PlayListViewController.h"
+#import "CollectionListViewController.h"
 
 static NSString *const cellId = @"cellId";
 static NSString *const headerId = @"headerId";
@@ -58,7 +58,7 @@ static NSString *const footerId = @"footerId";
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds) - kStatusBarHeight - 49) collectionViewLayout:layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
-        UINib *nib = [UINib nibWithNibName:@"SectionCollectionViewCell" bundle:nil];
+        UINib *nib = [UINib nibWithNibName:@"CollectionViewCell" bundle:nil];
         [_collectionView registerNib:nib forCellWithReuseIdentifier:cellId];
         [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerId];
         [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerId];
@@ -80,7 +80,7 @@ static NSString *const footerId = @"footerId";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    SectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     [cell configCellData:self.fetchRetVC.sections[indexPath.section].objects.firstObject title:self.fetchRetVC.sections[indexPath.section].name];
     return cell;
 }
@@ -160,7 +160,7 @@ static NSString *const footerId = @"footerId";
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
 //    UINavigationController *nav = [UINavigationController]
-    PlayListViewController *plVc = [[PlayListViewController alloc] init];
+    CollectionListViewController *plVc = [[CollectionListViewController alloc] init];
     plVc.dataSource = self.fetchRetVC.sections[indexPath.row].objects;
     [self.navigationController pushViewController:plVc animated:YES];
 }

@@ -1,12 +1,12 @@
 //
-//  PlayListViewController.m
+//  CollectionListViewController.m
 //  NewPipe
 //
 //  Created by Somiya on 2018/12/11.
 //  Copyright © 2018 Somiya. All rights reserved.
 //
 
-#import "PlayListViewController.h"
+#import "CollectionListViewController.h"
 #import "SVProgressHUD+Util.h"
 #import "SVProgressHUD.h"
 #import "ColorUtil.h"
@@ -18,11 +18,11 @@
 #import "Constant.h"
 
 static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellIdentifier";
-@interface PlayListViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface CollectionListViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
 @end
 
-@implementation PlayListViewController
+@implementation CollectionListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,18 +33,9 @@ static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellId
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
-//    self.dataSource = [CollectionItem MR_findAllSortedBy:@"updateTime" ascending:NO];
-//    [self.tableView reloadData];
-//    [SVProgressHUD dismiss];
-     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     self.navigationController.navigationBar.tintColor = UICOLOR_HEX(0xE54D42);
-//    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"pixel"] forBarMetrics:UIBarMetricsDefault]; // 导航栏背景设置为透明
-//    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"pixel"]]; //导航栏底部线条设为透明
-//    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:17], NSForegroundColorAttributeName: UICOLOR_RGB(0, 0, 0, 1)}];
-//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
 }
 
 - (void)didReceiveMemoryWarning {

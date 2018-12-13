@@ -1,5 +1,5 @@
 //
-//  PlayListViewController.h
+//  CollectionListViewController.h
 //  NewPipe
 //
 //  Created by Somiya on 2018/12/11.
@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface PlayListViewController : BaseViewController
+@interface CollectionListViewController : BaseViewController
 @property (nonatomic, copy) NSArray *dataSource;
 @end

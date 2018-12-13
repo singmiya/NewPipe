@@ -1,5 +1,5 @@
 //
-//  SectionCollectionViewCell.h
+//  CollectionViewCell.h
 //  NewPipe
 //
 //  Created by Somiya on 2018/12/11.
@@ -8,6 +8,6 @@
 
 #import "BaseCollectionViewCell.h"
 
-@interface SectionCollectionViewCell : BaseCollectionViewCell
+@interface CollectionViewCell : BaseCollectionViewCell
 - (void)configCellData:(id)data title:(NSString *)title;
 @end

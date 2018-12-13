@@ -10,6 +10,7 @@
 #import "VideoInfo.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+Util.h"
+#import "UIButton+Util.h"
 
 @interface HeadView()
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -46,23 +47,23 @@
     self.authorLabel.text = info.author;
     [self.imgView sd_setImageWithURL:[NSURL URLWithString:info.avatarImgUrl]];
     self.likeLabel.text = [info.likeNums convertNumber];
-    self.likeLabel.attributedText = [self getAttributedString:self.likeLabel.text withImg:@"like"];
+    self.likeLabel.attributedText = [self.likeLabel.text attributedStringWithImg:@"like"];
     self.dislikeLabel.text = [info.dislikeNums convertNumber];
-    self.dislikeLabel.attributedText = [self getAttributedString:self.dislikeLabel.text withImg:@"dislike"];
+    self.dislikeLabel.attributedText = [self.dislikeLabel.text attributedStringWithImg:@"dislike"];
     self.sectionLabel.text = NSLocalizedString(@"PlayList", nil);
     [self.addBtn setTitle:NSLocalizedString(@"Collection", nil) forState:UIControlStateNormal];
     [_addBtn setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
-    [self setButtonImageAndTitleWithSpace:5 WithButton:self.addBtn];
+    [self.addBtn setButtonImageAndTitleWithSpace:5];
     
     [self.praiseBtn setTitle:NSLocalizedString(@"Praise", nil) forState:UIControlStateNormal];
     [_praiseBtn setImage:[UIImage imageNamed:@"praise"] forState:UIControlStateNormal];
-    [self setButtonImageAndTitleWithSpace:5 WithButton:self.praiseBtn];
+    [self.praiseBtn setButtonImageAndTitleWithSpace:5];
     [self updateFrames];
 }
 
 - (void)updateFrames {
     CGFloat w = CGRectGetWidth(self.frame);
-    CGFloat h = [self heightForString:self.titleLabel.text font:self.titleLabel.font andWidth:w];
+    CGFloat h = [self.titleLabel.text stringHeightWithFont:self.titleLabel.font andWidth:w];
     CGRect frame = (CGRect){{5, 15}, {w - 10, h}};
     self.titleLabel.frame = frame;
 
@@ -209,81 +210,4 @@
     return _praiseBtn;
 }
 
-/**
- * 获得字符串的高度
- * @param value
- * @param font
- * @param width
- * @return
- */
-- (float) heightForString:(NSString *)value font:(UIFont *)font andWidth:(float)width {
-    if (value == nil) {
-        return 0;
-    }
-    // 段落设置与实际显示的 Label 属性一致 采用 NSMutableParagraphStyle 设置Nib 中 Label 的相关属性传入到 NSAttributeString 中计算；
-    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    style.lineBreakMode = NSLineBreakByWordWrapping;
-    style.alignment = NSTextAlignmentLeft;
-
-    NSAttributedString *string = [[NSAttributedString alloc]initWithString:value attributes:@{NSFontAttributeName:font, NSParagraphStyleAttributeName:style}];
-
-    CGSize sizeToFit =  [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
-    NSLog(@" size =  %@", NSStringFromCGSize(sizeToFit));
-
-    return sizeToFit.height;
-}
-
-/**
- * 获取字符串的长度
- * @param value
- * @param font
- * @param height
- * @return
- */
-- (float)widthForStrng:(NSString *)value font:(UIFont *)font andHeight:(float)height {
-    // 段落设置与实际显示的 Label 属性一致 采用 NSMutableParagraphStyle 设置Nib 中 Label 的相关属性传入到 NSAttributeString 中计算；
-    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    style.lineBreakMode = NSLineBreakByWordWrapping;
-    style.alignment = NSTextAlignmentLeft;
-
-    NSAttributedString *string = [[NSAttributedString alloc]initWithString:value attributes:@{NSFontAttributeName:font, NSParagraphStyleAttributeName:style}];
-
-    CGSize sizeToFit =  [string boundingRectWithSize:CGSizeMake(MAXFLOAT, height) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
-    NSLog(@" size =  %@", NSStringFromCGSize(sizeToFit));
-
-    return sizeToFit.width;
-}
-
-
-- (NSMutableAttributedString *)getAttributedString:(NSString *)text withImg:(NSString *)img {
-    if (!text) {
-        text = @"0";
-    }
-    NSMutableAttributedString * attriStr = [[NSMutableAttributedString alloc] initWithString:text];
-    /**
-     添加图片到指定的位置
-     */
-    NSTextAttachment *attchImage = [[NSTextAttachment alloc] init];
-    // 表情图片
-    attchImage.image = [UIImage imageNamed:img];
-    // 设置图片大小
-    attchImage.bounds = CGRectMake(0, -5, 20, 20);
-    NSAttributedString *stringImage = [NSAttributedString attributedStringWithAttachment:attchImage];
-    [attriStr insertAttributedString:stringImage atIndex:0];
-    return attriStr;
-}
-- (void)setButtonImageAndTitleWithSpace:(CGFloat)spacing WithButton:(UIButton *)btn{
-    CGSize imageSize = btn.imageView.frame.size;
-    CGSize titleSize = btn.titleLabel.frame.size;
-    
-    CGSize textSize = [btn.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: btn.titleLabel.font}];
-    CGSize frameSize = CGSizeMake(ceilf(textSize.width), ceilf(textSize.height));
-    if (titleSize.width + 0.5 < frameSize.width) {
-        titleSize.width = frameSize.width;
-    }
-    CGFloat totalHeight = (imageSize.height + titleSize.height + spacing);
-    btn.imageEdgeInsets = UIEdgeInsetsMake(- (totalHeight - imageSize.height), 0.0, 0.0, - titleSize.width);
-    btn.titleEdgeInsets = UIEdgeInsetsMake(0, - imageSize.width, - (totalHeight - titleSize.height), 0);
-    
-}
 @end

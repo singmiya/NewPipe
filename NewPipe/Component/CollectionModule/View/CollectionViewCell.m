@@ -1,17 +1,17 @@
 //
-//  SectionCollectionViewCell.m
+//  CollectionViewCell.m
 //  NewPipe
 //
 //  Created by Somiya on 2018/12/11.
 //  Copyright © 2018 Somiya. All rights reserved.
 //
 
-#import "SectionCollectionViewCell.h"
+#import "CollectionViewCell.h"
 #import "CollectionItem+CoreDataClass.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+Util.h"
 
-@interface SectionCollectionViewCell()
+@interface CollectionViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UIImageView *headImgView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 
 @end
-@implementation SectionCollectionViewCell
+@implementation CollectionViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

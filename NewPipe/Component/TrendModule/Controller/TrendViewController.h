@@ -1,5 +1,5 @@
 //
-//  PlayListViewController.h
+//  CollectionListViewController.h
 //  NewPipe
 //
 //  Created by Somiya on 2018/10/14.

@@ -17,7 +17,7 @@
 @implementation PlayItem
 
 + (NSDictionary *)modelCustomPropertyMapper {
-    [NSString stringWithFormat:@"https://www.youtube.comwatch?v=%@", @"xx"];
+//    [NSString stringWithFormat:@"https://www.youtube.comwatch?v=%@", @"xx"];
     return @{@"vid" : @"id",
              @"vdescription" : @"description"
              };
@@ -33,7 +33,6 @@
             }
             PlayItem *obj = [PlayItem yy_modelWithDictionary:dic];
             if (obj) {
-                obj.playnum = obj.playnum;
                 [items addObject:obj];
             }
         }

@@ -54,7 +54,7 @@
 - (void)get:(NSString *)url params:(NSDictionary *)params success:(SuccessCallBack)successCallBack failure:(FailureCallBack)failureCallBack {
     // 1.创建会话管理者
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/plain"];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/plain", @"application/json", @"text/html,application/xhtml+xml,application/xml;"]];
     // 2.发送GET请求
     /**
      GET: NSString类型的请求路径，AFN内部会自动将该路径包装为一个url并创建请求对象

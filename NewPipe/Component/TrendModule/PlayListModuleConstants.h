@@ -10,5 +10,5 @@
 #define PlayListModuleConstants_h
 
 #define PLAY_LIST @"YoutubeFeed.json"
-
+#define RECOMMEND_LIST @"YoutubeFeed/Test/YoutubeDev/Youtubefeed.json"
 #endif /* PlayListModuleConstants_h */
