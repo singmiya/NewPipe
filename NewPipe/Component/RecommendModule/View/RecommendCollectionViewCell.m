@@ -10,6 +10,7 @@
 #import "RecommendItem.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+Util.h"
+#import "NetWorkConstants.h"
 
 @interface RecommendCollectionViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
@@ -38,6 +39,6 @@
     _dislikeLabel.attributedText = [_dislikeLabel.text attributedStringWithImg:@"dislike"];
     _commentLabel.text = [NSString convertNumberToStr:item.statistics.commentCount];
     _commentLabel.attributedText = [_commentLabel.text attributedStringWithImg:@"comment"];
-    [_imgView sd_setImageWithURL:[NSURL URLWithString:item.imgUrl]];
+    [_imgView sd_setImageWithURL:[NSURL URLWithString:IMAGE_URL(item.iid)]];
 }
 @end

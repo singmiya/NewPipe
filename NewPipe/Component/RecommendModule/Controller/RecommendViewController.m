@@ -122,11 +122,11 @@ static NSString *const footerId = @"footerId";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    return (CGSize){CGRectGetWidth(self.view.frame) - 10, (CGRectGetWidth(self.view.frame) - 10) / 2 + 130};
+    return (CGSize){CGRectGetWidth(self.view.frame), CGRectGetWidth(self.view.frame) * 3 / 4 + 130};
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(5, 5, 5, 5);
+    return UIEdgeInsetsMake(0, 5, 5, 0);
 }
 
 

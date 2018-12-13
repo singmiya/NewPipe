@@ -26,7 +26,7 @@
     [self.view addSubview:self.tableView];
     self.section2Data = @[@{@"title":NSLocalizedString(@"AboutUS", nil)}, @{@"title":NSLocalizedString(@"Like", nil)}, @{@"title":NSLocalizedString(@"Privacy", nil)}];
     self.section1Data = [NSMutableArray array];
-    NSString *url = [NSString stringWithFormat:@"%@%@", BASE_URL, @"Category.json"];
+    NSString *url = [NSString stringWithFormat:@"%@%@", BASE_URL1, @"Category.json"];
     [[DataSourceManager sharedInstance] get:url params:nil success:^(id response) {
         NSDictionary *dic = response;
         [self.section1Data addObjectsFromArray:[dic.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
