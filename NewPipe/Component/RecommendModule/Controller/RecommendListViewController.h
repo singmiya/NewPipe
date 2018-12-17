@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface RecommendListViewController : BaseViewController
+@property (nonatomic, copy) NSString *childPath;
 
 @end

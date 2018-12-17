@@ -7,9 +7,11 @@
 //
 
 #import "RecommendTableViewCell.h"
-#import "PlayItem.h"
+#import "RecommendItem.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+Util.h"
+#import "NetWorkConstants.h"
+#import "PlayItem.h"
 
 @interface RecommendTableViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *thumbImageView;
@@ -17,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *viewsNumsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
 @end
 @implementation RecommendTableViewCell
@@ -35,15 +38,25 @@
 }
 
 - (void)configCellData:(id)data {
-    PlayItem *item = (PlayItem *)data;
-    _titleLabel.text = item.title;
-    if (item.duration != nil) {
-        _durationLabel.text = [NSString stringWithFormat:@" %@ ", item.duration];
+    
+    if ([data isKindOfClass:[RecommendItem class]]) {
+        RecommendItem *item =(RecommendItem *)data;
+        _titleLabel.text = item.title;
+        _descriptionLabel.text = item.vdescription;
+        _viewsNumsLabel.text = [NSString stringWithFormat:@"%@ views", [NSString convertNumberToStr:item.statistics.viewCount]];
+        [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:IMAGE_URL(item.vid)] placeholderImage:[UIImage imageNamed:@"default"]];
     } else {
-        _durationLabel.hidden = YES;
+        PlayItem *item = (PlayItem *)data;
+        _titleLabel.text = item.title;
+        if (item.duration != nil) {
+            _durationLabel.text = [NSString stringWithFormat:@" %@ ", item.duration];
+        } else {
+            _durationLabel.hidden = YES;
+        }
+        _descriptionLabel.text = item.vdescription;
+        _viewsNumsLabel.text = [item.playnum convertNumber];
+        _dateLabel.text = item.lasttime;
+        [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:IMAGE_URL(item.vid)] placeholderImage:[UIImage imageNamed:@"default"]];
     }
-    _viewsNumsLabel.text = [NSString stringWithFormat:@"%@ views", [item.playnum convertNumber]];
-    _dateLabel.text = item.lasttime;
-    [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:item.imgurl]];
 }
 @end

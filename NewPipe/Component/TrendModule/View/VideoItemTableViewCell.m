@@ -154,7 +154,7 @@
     }
     _viewsNumLabel.text = [NSString stringWithFormat:@"%@ views", [item.playnum convertNumber]];
     _timeLabel.text = item.lasttime;
-    [_videoImageView sd_setImageWithURL:[NSURL URLWithString:item.imgurl]];
+    [_videoImageView sd_setImageWithURL:[NSURL URLWithString:item.imgurl] placeholderImage:[UIImage imageNamed:@"default"]];
     
 }
 

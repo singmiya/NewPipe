@@ -45,7 +45,7 @@
     self.titleLabel.text = info.title;
     self.viewCountLabel.text = info.viewCount;
     self.authorLabel.text = info.author;
-    [self.imgView sd_setImageWithURL:[NSURL URLWithString:info.avatarImgUrl]];
+    [self.imgView sd_setImageWithURL:[NSURL URLWithString:info.avatarImgUrl] placeholderImage:[UIImage imageNamed:@"default"]];
     self.likeLabel.text = [info.likeNums convertNumber];
     self.likeLabel.attributedText = [self.likeLabel.text attributedStringWithImg:@"like"];
     self.dislikeLabel.text = [info.dislikeNums convertNumber];

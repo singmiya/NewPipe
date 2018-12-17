@@ -9,7 +9,6 @@
 #import "PlayItem.h"
 #import "DataSourceManager.h"
 #import "NetWorkConstants.h"
-#import "PlayListModuleConstants.h"
 #import "YYModel.h"
 #import "TFHpple.h"
 #import <MagicalRecord/MagicalRecord.h>
@@ -24,7 +23,7 @@
 }
 
 + (void)getRecommendPlayItemList:(void (^)(NSArray * _Nonnull))callBack {
-    NSString *url = [NSString stringWithFormat:@"%@%@", BASE_URL, PLAY_LIST];
+    NSString *url = [NSString stringWithFormat:@"%@%@YoutubeFeed.json", BASE_URL, PLAY_LIST];
     [[DataSourceManager sharedInstance] get:url params:nil success:^(id response) {
         NSMutableArray *items = [NSMutableArray array];
         for (NSDictionary *dic in response[@"items"]) {

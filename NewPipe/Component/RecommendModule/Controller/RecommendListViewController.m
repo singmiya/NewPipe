@@ -7,7 +7,7 @@
 //
 
 #import "RecommendListViewController.h"
-#import "PlayItem.h"
+#import "RecommendItem.h"
 #import "RecommendTableViewCell.h"
 #import "PlayViewController.h"
 #import "SVProgressHUD.h"
@@ -15,11 +15,14 @@
 #import "ColorUtil.h"
 #import "Constant.h"
 #import "MJRefresh.h"
+#import "PlayItem.h"
+#import "NetWorkConstants.h"
+
 static NSString *RecommendTableViewCellIdentifier = @"RecommendTableViewCellIdentifier";
 @interface RecommendListViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, copy) NSArray *dataSource;
-
+@property (nonatomic, copy) NSDictionary *pageInfo;
 @end
 
 @implementation RecommendListViewController
@@ -33,13 +36,17 @@ static NSString *RecommendTableViewCellIdentifier = @"RecommendTableViewCellIden
 }
 
 - (void)loadData {
-    __weak __typeof(self) weakSelf = self;
-    [PlayItem getRecommendPlayItemList:^(NSArray * _Nonnull playList) {
-        __strong __typeof(weakSelf) strongSelf = weakSelf;
-        strongSelf.dataSource = playList;
-        [strongSelf.tableView reloadData];
-        [strongSelf.tableView.mj_header endRefreshing];
-    }];
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
+    NSString *url = [NSString stringWithFormat:@"%@%@%@YoutubeFeed.json", BASE_URL, PREFIX_URL, self.childPath];
+    @weakify(self)
+    [RecommendItem getRecommendItemList:^(NSArray *playList, NSDictionary *pageInfo) {
+        @strongify(self)
+        self.dataSource = playList;
+        self.pageInfo = pageInfo;
+        [self.tableView reloadData];
+        [self.tableView.mj_header endRefreshing];
+        [SVProgressHUD dismiss];
+    } url:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -57,7 +64,7 @@ static NSString *RecommendTableViewCellIdentifier = @"RecommendTableViewCellIden
 //----- init table view
 - (UITableView *)tableView {
     if(!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds) - kStatusBarHeight - 49) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds) - 49) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];
@@ -97,7 +104,12 @@ static NSString *RecommendTableViewCellIdentifier = @"RecommendTableViewCellIden
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PlayViewController *playVC = [PlayViewController new];
-    playVC.item = self.dataSource[indexPath.row];
+    PlayItem *item = [PlayItem new];
+    RecommendItem *rItem = (RecommendItem *) self.dataSource[indexPath.row];
+    item.vid = rItem.vid;
+    item.imgurl = IMAGE_URL(rItem.vid);
+    item.title = rItem.title;
+    playVC.item = item;
     [self presentViewController:playVC animated:YES completion:nil];
 }
 

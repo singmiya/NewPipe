@@ -71,10 +71,10 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         successCallBack(responseObject);
-//        NSLog(@"%@\n%@",task.response,responseObject);
+        NSLog(@"%@\n%@",task.response,responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         failureCallBack(error);
-//        NSLog(@"%@",error);
+        NSLog(@"%@",error);
     }];
 }
 @end

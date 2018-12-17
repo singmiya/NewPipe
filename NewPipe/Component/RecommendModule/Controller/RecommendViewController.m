@@ -15,6 +15,7 @@
 #import "Constant.h"
 #import "RecommendListViewController.h"
 #import "MJRefresh.h"
+#import "NetWorkConstants.h"
 
 static NSString *const cellId = @"cellId";
 static NSString *const headerId = @"headerId";
@@ -39,6 +40,7 @@ static NSString *const footerId = @"footerId";
 
 - (void)loadData {
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
+    NSString *url = [NSString stringWithFormat:@"%@%@", BASE_URL, RECOMMEND_LIST];
     @weakify(self)
     [RecommendItem getRecommendItemList:^(NSArray *playList, NSDictionary *pageInfo) {
         @strongify(self)
@@ -47,7 +49,7 @@ static NSString *const footerId = @"footerId";
         [self.collectionView reloadData];
         [self.collectionView.mj_header endRefreshing];
         [SVProgressHUD dismiss];
-    }];
+    } url:url];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -161,6 +163,8 @@ static NSString *const footerId = @"footerId";
 // 点击高亮
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     RecommendListViewController *rlVc = [[RecommendListViewController alloc] init];
+    RecommendItem *item = self.dataSource[indexPath.section];
+    rlVc.childPath = item.childPath;
     [self.navigationController pushViewController:rlVc animated:YES];
 }
 

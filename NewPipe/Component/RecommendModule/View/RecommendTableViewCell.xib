@@ -91,6 +91,7 @@
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="dateLabel" destination="UDO-qF-hmq" id="UCS-5D-TK8"/>
+                <outlet property="descriptionLabel" destination="ajD-oa-ZLc" id="LgO-5V-bZh"/>
                 <outlet property="durationLabel" destination="VYQ-co-CYm" id="Glo-XH-Gr2"/>
                 <outlet property="thumbImageView" destination="oX0-z2-mJM" id="vce-Uw-Zc6"/>
                 <outlet property="titleLabel" destination="ms7-96-8iL" id="SM5-6d-cs2"/>

@@ -10,17 +10,17 @@
 
 @class Statistics;
 @interface RecommendItem : NSObject
-@property (nonatomic, copy) NSString *iid;
+@property (nonatomic, copy) NSString *vid;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *imgUrl;
-@property (nonatomic, copy) NSString *idescription;
+@property (nonatomic, copy) NSString *vdescription;
 @property (nonatomic, copy) NSString *childPath;
 @property (nonatomic, strong) Statistics *statistics;
 
 /**
  * 通过接口加载推荐列表
  */
-+ (void)getRecommendItemList:(void(^)(NSArray *playList, NSDictionary *pageInfo))callBack;
++ (void)getRecommendItemList:(void(^)(NSArray *playList, NSDictionary *pageInfo))callBack url:(NSString *)url;
 
 @end
 

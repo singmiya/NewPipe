@@ -8,7 +8,6 @@
 
 #import "RecommendItem.h"
 #import "NetWorkConstants.h"
-#import "PlayListModuleConstants.h"
 #import "DataSourceManager.h"
 #import "YYModel.h"
 
@@ -16,8 +15,8 @@
 
 + (NSDictionary *)modelCustomPropertyMapper {
     //    [NSString stringWithFormat:@"https://www.youtube.comwatch?v=%@", @"xx"];
-    return @{@"iid" : @"id",
-             @"idescription" : @"description"
+    return @{@"vid" : @"id",
+             @"vdescription" : @"description"
              };
 }
 
@@ -25,8 +24,7 @@
     return @{@"statistics": [Statistics class]};
 }
 
-+ (void)getRecommendItemList:(void (^)(NSArray * _Nonnull, NSDictionary *_Nonnull))callBack {
-    NSString *url = [NSString stringWithFormat:@"%@%@", BASE_URL, RECOMMEND_LIST];
++ (void)getRecommendItemList:(void (^)(NSArray * _Nonnull, NSDictionary *_Nonnull))callBack url:(NSString *)url {
     [[DataSourceManager sharedInstance] get:url params:nil success:^(id response) {
         NSMutableArray *items = [NSMutableArray array];
         for (NSDictionary *dic in response[@"items"]) {
