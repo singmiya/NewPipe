@@ -33,18 +33,32 @@
     // Initialization code
 }
 - (void)configCellData:(id)data title:(NSString *)title {
-    CollectionItem *item = (CollectionItem *)data;
-    _titleLabel.text = title;
-    _nameLabel.text = item.author;
-//    if (item.duration != nil) {
-//        _durationLabel.text = [NSString stringWithFormat:@" %@ ", item.duration];
-//    } else {
-//        _durationLabel.hidden = YES;
-//    }
-    _viewsLabel.text = [NSString stringWithFormat:@"%@ views", [item.playnum convertNumber]];
-    _timeLabel.text = item.lasttime;
-    [_imgView sd_setImageWithURL:[NSURL URLWithString:item.imgurl] placeholderImage:[UIImage imageNamed:@"default"]];
-    [_headImgView sd_setImageWithURL:[NSURL URLWithString:item.avatarImgUrl] placeholderImage:[UIImage imageNamed:@"default"]];
-    
+    if ([data isKindOfClass:[CollectionItem class]]) {
+        CollectionItem *item =(CollectionItem *)data;
+        _titleLabel.text = title;
+        _nameLabel.text = item.author;
+        //    if (item.duration != nil) {
+        //        _durationLabel.text = [NSString stringWithFormat:@" %@ ", item.duration];
+        //    } else {
+        //        _durationLabel.hidden = YES;
+        //    }
+        _viewsLabel.text = [NSString stringWithFormat:@"%@ %@", [item.playnum convertNumber], NSLocalizedString(@"views", nil)];
+        _timeLabel.text = item.lasttime;
+        [_imgView sd_setImageWithURL:[NSURL URLWithString:item.imgurl] placeholderImage:[UIImage imageNamed:@"default"]];
+        [_headImgView sd_setImageWithURL:[NSURL URLWithString:item.avatarImgUrl] placeholderImage:[UIImage imageNamed:@"default"]];
+    } else {
+        NSDictionary *dic = data;
+        _titleLabel.text = dic[@"name"];
+        _nameLabel.text = dic[@"uploader"];
+        //    if (item.duration != nil) {
+        //        _durationLabel.text = [NSString stringWithFormat:@" %@ ", item.duration];
+        //    } else {
+        //        _durationLabel.hidden = YES;
+        //    }
+        _viewsLabel.text = [NSString stringWithFormat:@"%@ %@", dic[@"playnum"], NSLocalizedString(@"views", nil)];
+//        _timeLabel.text = item.lasttime;
+        [_imgView sd_setImageWithURL:[NSURL URLWithString:dic[@"thumbnailUrl"]] placeholderImage:[UIImage imageNamed:@"default"]];
+        [_headImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"avatarImgUrl"]] placeholderImage:[UIImage imageNamed:@"default"]];
+    }
 }
 @end

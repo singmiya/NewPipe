@@ -38,12 +38,11 @@
 }
 
 - (void)configCellData:(id)data {
-    
     if ([data isKindOfClass:[RecommendItem class]]) {
         RecommendItem *item =(RecommendItem *)data;
         _titleLabel.text = item.title;
         _descriptionLabel.text = item.vdescription;
-        _viewsNumsLabel.text = [NSString stringWithFormat:@"%@ views", [NSString convertNumberToStr:item.statistics.viewCount]];
+        _viewsNumsLabel.text = [NSString stringWithFormat:@"%@ %@", [NSString convertNumberToStr:item.statistics.viewCount], NSLocalizedString(@"views", nil)];
         [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:IMAGE_URL(item.vid)] placeholderImage:[UIImage imageNamed:@"default"]];
     } else {
         PlayItem *item = (PlayItem *)data;
@@ -54,7 +53,7 @@
             _durationLabel.hidden = YES;
         }
         _descriptionLabel.text = item.vdescription;
-        _viewsNumsLabel.text = [item.playnum convertNumber];
+        _viewsNumsLabel.text = [NSString stringWithFormat:@"%@ %@", [item.playnum convertNumber], NSLocalizedString(@"views", nil)];
         _dateLabel.text = item.lasttime;
         [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:IMAGE_URL(item.vid)] placeholderImage:[UIImage imageNamed:@"default"]];
     }

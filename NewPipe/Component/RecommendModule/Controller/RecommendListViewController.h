@@ -10,5 +10,7 @@
 
 @interface RecommendListViewController : BaseViewController
 @property (nonatomic, copy) NSString *childPath;
+@property (nonatomic, assign) NSInteger type;
+@property (nonatomic, copy) NSString *url;
 
 @end

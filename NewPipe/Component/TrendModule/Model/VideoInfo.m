@@ -23,6 +23,8 @@
 + (VideoInfo *)extractorVideoInfo:(NSString *)vid data:(NSData *)data {
     TFHpple *doc = [[TFHpple alloc] initWithHTMLData:data];
     
+    // 匹配空格和换行符的的正则表达式
+    NSRegularExpression *whiteSpaceAndNewLineRegex = [NSRegularExpression regularExpressionWithPattern:@"\n\\s*" options:0 error:nil];
     VideoInfo *info = [VideoInfo new];
     NSArray *elements = [doc searchWithXPathQuery:@"//img/@data-thumb"];
     if (elements.count > 0) {
@@ -32,15 +34,15 @@
     if (elements.count > 0) {
         info.title = [[elements[0] text] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     }
-    // 匹配空格和换行符的的真个表达式
-    NSRegularExpression *whiteSpaceAndNewLineRegex = [NSRegularExpression regularExpressionWithPattern:@"\n\\s*" options:0 error:nil];
+
     elements = [doc searchWithXPathQuery:@"//div[@class='yt-user-info']/a"];
     if (elements.count > 0) {
         info.author = [whiteSpaceAndNewLineRegex stringByReplacingMatchesInString:[elements[0] text] options:0 range:NSMakeRange(0, [elements[0] text].length) withTemplate:@" "];
     }
     elements = [doc searchWithXPathQuery:@"//div[@class='watch-view-count']"];
     if (elements.count > 0) {
-        info.viewCount = [elements[0] text];
+        NSString *tempCount = [[elements[0] text] stringByReplacingOccurrencesOfString:NSLocalizedString(@"views", nil) withString:@""];
+        info.viewCount = [whiteSpaceAndNewLineRegex stringByReplacingMatchesInString:tempCount options:0 range:NSMakeRange(0, tempCount.length) withTemplate:@" "];
     }
     elements = [doc searchWithXPathQuery:@"//span[contains(@class, 'like-button-renderer')]/span/button/span"];
     if (elements.count == 4) {

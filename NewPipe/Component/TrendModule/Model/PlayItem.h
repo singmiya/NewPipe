@@ -34,11 +34,11 @@
  * 从缓存中读取数据
  */
 + (void)getCachedPlayItemList:(void(^)(NSArray *playList))callBack;
-
 /**
  * 从网页中解析出相关视频列表
  */
 + (void)getVideoList:(void(^)(NSArray *videoList))callBack withVid:(NSString *)vid;
++ (void)getVideoList:(void(^)(NSArray *videoList))callBack withUrl:(NSString *)url;
 
 + (void)getSearchResult:(void(^)(NSArray *retList))callBack searchString:(NSString *)searchStr page:(NSInteger)page;
 @end

@@ -43,7 +43,7 @@
 
 - (void)configData:(VideoInfo *)info {
     self.titleLabel.text = info.title;
-    self.viewCountLabel.text = info.viewCount;
+    self.viewCountLabel.text = [NSString stringWithFormat:@"%@ %@", info.viewCount, NSLocalizedString(@"views", nil)];
     self.authorLabel.text = info.author;
     [self.imgView sd_setImageWithURL:[NSURL URLWithString:info.avatarImgUrl] placeholderImage:[UIImage imageNamed:@"default"]];
     self.likeLabel.text = [info.likeNums convertNumber];

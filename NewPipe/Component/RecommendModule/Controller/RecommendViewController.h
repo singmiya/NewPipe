@@ -9,5 +9,7 @@
 #import "BaseViewController.h"
 
 @interface RecommendViewController : BaseViewController
+@property (nonatomic, copy) NSString *url;
+@property (nonatomic, assign) NSInteger type;
 
 @end

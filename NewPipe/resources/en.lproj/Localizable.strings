@@ -33,3 +33,5 @@ CFBundleDisplayName = "NewPipe";
 "Collected" = "Collected";
 "HasCollected" = "This video has been collection";
 "VideoUnavailable" = "Video is unavailable";
+
+"views" = "views";

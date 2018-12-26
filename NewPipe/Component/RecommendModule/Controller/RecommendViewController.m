@@ -16,6 +16,8 @@
 #import "RecommendListViewController.h"
 #import "MJRefresh.h"
 #import "NetWorkConstants.h"
+#import "MainTabController.h"
+#import "ZJDrawerController.h"
 
 static NSString *const cellId = @"cellId";
 static NSString *const headerId = @"headerId";
@@ -40,7 +42,9 @@ static NSString *const footerId = @"footerId";
 
 - (void)loadData {
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
-    NSString *url = [NSString stringWithFormat:@"%@%@", BASE_URL, RECOMMEND_LIST];
+    if (self.url == nil) {
+        self.url = [NSString stringWithFormat:@"%@%@", BASE_URL, RECOMMEND_LIST];
+    }
     @weakify(self)
     [RecommendItem getRecommendItemList:^(NSArray *playList, NSDictionary *pageInfo) {
         @strongify(self)
@@ -49,12 +53,33 @@ static NSString *const footerId = @"footerId";
         [self.collectionView reloadData];
         [self.collectionView.mj_header endRefreshing];
         [SVProgressHUD dismiss];
-    } url:url];
+    } url:self.url];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    if (self.type == 1) {
+        UIButton *butn = [UIButton buttonWithType:UIButtonTypeCustom];
+        butn.frame = CGRectMake(0, 0, 40, 40);
+        [butn setBackgroundImage:[UIImage imageNamed:@"close_rr"] forState:UIControlStateNormal];
+        [butn addTarget:self action:@selector(backButnClick:) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:butn];
+        
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+        self.navigationController.navigationBar.tintColor = UICOLOR_HEX(0xE54D42);
+        
+    } else {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
+}
+
+- (void)backButnClick:(id)sender {
+    MainTabController *mainTab = [[MainTabController alloc] init];
+    [self.zj_drawerController setupNewCenterViewController:mainTab closeDrawer:NO finishHandler:^(BOOL finished) {
+    }];
+    [self.zj_drawerController openLeftDrawerAnimated:YES finishHandler:^(BOOL finished) {
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

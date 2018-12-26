@@ -17,6 +17,9 @@
 #import "CollectionItem+CoreDataClass.h"
 #import "Constant.h"
 #import "CollectionListViewController.h"
+#import "DataSourceManager.h"
+#import "NetWorkConstants.h"
+#import "VideoInfo.h"
 
 static NSString *const cellId = @"cellId";
 static NSString *const headerId = @"headerId";
@@ -25,6 +28,8 @@ static NSString *const footerId = @"footerId";
 @interface CollectionViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSFetchedResultsController *fetchRetVC;
+@property (nonatomic, strong) NSMutableDictionary *firstDic;
+
 @end
 
 @implementation CollectionViewController
@@ -35,15 +40,37 @@ static NSString *const footerId = @"footerId";
     // Do any additional setup after loading the view.
     [self.view addSubview:self.collectionView];
     
+    NSString *url = [NSString stringWithFormat:@"%@%@%@", BASE_URL, PREFIX_URL, @"Category.json"];
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
+    @weakify(self)
+    [[DataSourceManager sharedInstance] get:url params:nil success:^(id response) {
+        @strongify(self)
+        NSArray *arr = response[@"Bookmark|"];
+        if (arr != nil && arr.count > 0) {
+            self.firstDic = [NSMutableDictionary dictionary];
+            [self.firstDic addEntriesFromDictionary:arr[0]];
+
+            NSString *vid = [[self.firstDic[@"thumbnailUrl"] stringByReplacingOccurrencesOfString:@"https://i.ytimg.com/vi/" withString:@""]  stringByReplacingOccurrencesOfString:@"/default.jpg" withString:@""];
+            [VideoInfo getVideoInfo:^(VideoInfo *videoInfo) {
+                self.firstDic[@"avatarImgUrl"] = videoInfo.avatarImgUrl;
+                self.firstDic[@"playnum"] = videoInfo.viewCount;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        //刷新界面
+                        [self.collectionView reloadData];
+                        [SVProgressHUD dismiss];
+                    });
+            } withVid:vid];;
+        }
+    } failure:^(id response) {
+
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
-     self.fetchRetVC = [CollectionItem MR_fetchAllGroupedBy:@"listName" withPredicate:nil sortedBy:@"updateTime" ascending:NO];
-
+//    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
+    self.fetchRetVC = [CollectionItem MR_fetchAllGroupedBy:@"listName" withPredicate:nil sortedBy:@"updateTime" ascending:NO];
     [self.collectionView reloadData];
-    [SVProgressHUD dismiss];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
@@ -70,10 +97,13 @@ static NSString *const footerId = @"footerId";
 #pragma mark -
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    if (!self.fetchRetVC || !self.fetchRetVC.sections) {
-        return 0;
+    if ((self.fetchRetVC && self.fetchRetVC.sections) && self.firstDic) {
+        return self.fetchRetVC.sections.count + 1;
     }
-    return self.fetchRetVC.sections.count;
+    if (self.fetchRetVC && self.fetchRetVC.sections) {
+        return self.fetchRetVC.sections.count;
+    }
+    return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return 1;
@@ -81,7 +111,17 @@ static NSString *const footerId = @"footerId";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
-    [cell configCellData:self.fetchRetVC.sections[indexPath.section].objects.firstObject title:self.fetchRetVC.sections[indexPath.section].name];
+    if (self.firstDic) {
+        if (indexPath.section == 0) {
+            [cell configCellData:self.firstDic title:self.firstDic[@"title"]];
+        } else {
+            [cell configCellData:self.fetchRetVC.sections[indexPath.section - 1].objects.firstObject title:self.fetchRetVC.sections[indexPath.section - 1].name];
+        }
+    } else {
+        [cell configCellData:self.fetchRetVC.sections[indexPath.section].objects.firstObject title:self.fetchRetVC.sections[indexPath.section].name];
+    }
+    
+
     return cell;
 }
 
@@ -159,9 +199,12 @@ static NSString *const footerId = @"footerId";
 // 点击高亮
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UINavigationController *nav = [UINavigationController]
     CollectionListViewController *plVc = [[CollectionListViewController alloc] init];
-    plVc.dataSource = self.fetchRetVC.sections[indexPath.row].objects;
+    if (self.firstDic) {
+        plVc.url = self.firstDic[@"url"];
+    } else {
+        plVc.dataSource = self.fetchRetVC.sections[indexPath.row].objects;
+    }
     [self.navigationController pushViewController:plVc animated:YES];
 }
 

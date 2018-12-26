@@ -29,6 +29,33 @@ static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellId
     [SVProgressHUD themeConfigContainerView:self.view];
     // Do any additional setup after loading the view.
     [self.view addSubview:self.tableView];
+    if (_url != nil) {
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
+        @weakify(self)
+        [PlayItem getVideoList:^(NSArray *videoList) {
+            @strongify(self)
+            NSMutableArray *arr = [NSMutableArray array];
+            for (PlayItem *pi in videoList) {
+                CollectionItem *ci = [CollectionItem MR_createEntity];
+                ci.vid = pi.vid;
+                ci.title = pi.title;
+                ci.author = pi.channelName;
+                ci.imgurl = pi.imgurl;
+                ci.goodnum = pi.goodnum;
+                ci.playnum = pi.playnum;
+                ci.badnum = pi.badnum;
+                ci.duration = pi.duration;
+                ci.lasttime = pi.lasttime;
+                [arr addObject:ci];
+            }
+            self.dataSource = arr;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //刷新界面
+                [self.tableView reloadData];
+                [SVProgressHUD dismiss];
+            });
+        } withUrl:_url];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -36,6 +63,11 @@ static NSString *CollectionTableViewCellIdentifier = @"CollectionTableViewCellId
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     self.navigationController.navigationBar.tintColor = UICOLOR_HEX(0xE54D42);
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+//    [CollectionItem mr]
 }
 
 - (void)didReceiveMemoryWarning {

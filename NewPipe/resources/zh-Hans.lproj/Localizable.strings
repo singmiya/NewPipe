@@ -33,3 +33,6 @@ CFBundleDisplayName = "NewPipe";
 "Collected" = "已收藏";
 "HasCollected" = "此视频已收藏过";
 "VideoUnavailable" = "视频不可用";
+
+
+"views" = "次观看";

@@ -152,7 +152,7 @@
     } else {
         _durationLabel.hidden = YES;
     }
-    _viewsNumLabel.text = [NSString stringWithFormat:@"%@ views", [item.playnum convertNumber]];
+    _viewsNumLabel.text = [NSString stringWithFormat:@"%@ %@", [item.playnum convertNumber], NSLocalizedString(@"views", nil)];
     _timeLabel.text = item.lasttime;
     [_videoImageView sd_setImageWithURL:[NSURL URLWithString:item.imgurl] placeholderImage:[UIImage imageNamed:@"default"]];
     

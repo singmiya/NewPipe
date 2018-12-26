@@ -10,4 +10,6 @@
 
 @interface CollectionListViewController : BaseViewController
 @property (nonatomic, copy) NSArray *dataSource;
+@property (nonatomic, copy) NSString *url;
+
 @end

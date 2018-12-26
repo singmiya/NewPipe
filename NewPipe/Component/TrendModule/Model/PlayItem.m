@@ -116,11 +116,27 @@
     });
 }
 
++ (void)getVideoList:(void (^)(NSArray *))callBack withUrl:(NSString *)url {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            NSString *path = [NSString stringWithFormat:@"%@/list123.html", [[NSBundle mainBundle] bundlePath]];
+        //    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+        NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:url]];
+//        NSError *error = nil;
+//        NSLog(@"The file is %lu bytes", (unsigned long)[data length]);
+//        NSString *fileStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
+//        BOOL written = [data writeToFile:[fileStr stringByAppendingPathComponent:@"list123.html"] options:0 error:&error];
+//        if(!written){
+//            NSLog(@"write failed: %@", [error localizedDescription]);
+//        }
+        callBack([PlayItem extractorDefaultRecommendPlayList:data]);
+    });
+}
+
 + (NSArray *)extractorRelatedVideoList:(NSString *)vid data:(NSData *)data {
     TFHpple *doc = [[TFHpple alloc] initWithHTMLData:data];
     NSArray *elements = [doc searchWithXPathQuery:@"//ul[contains(@id,'watch-related')]/li"];
     NSMutableArray *releatedVideoList = [NSMutableArray array];
-    // 匹配空格和换行符的的真个表达式
+    // 匹配空格和换行符的的正则表达式
     NSRegularExpression *whiteSpaceAndNewLineRegex = [NSRegularExpression regularExpressionWithPattern:@"\n\\s*" options:0 error:nil];
     for (TFHppleElement *element in elements) {
         PlayItem *item = [PlayItem new];
@@ -153,7 +169,7 @@
         // 解析play numbers
         NSArray *nums = [element searchWithXPathQuery:@"//span[contains(@class, 'view-count')]"];
         if (nums.count > 0) {
-            NSString *playnum = [[nums[0] text] stringByReplacingOccurrencesOfString:@"views" withString:@""];
+            NSString *playnum = [[nums[0] text] stringByReplacingOccurrencesOfString:NSLocalizedString(@"views", nil) withString:@""];
             item.playnum  = [whiteSpaceAndNewLineRegex stringByReplacingMatchesInString:playnum options:0 range:NSMakeRange(0, playnum.length) withTemplate:@" "];
         }
         [releatedVideoList addObject:item];
@@ -225,5 +241,42 @@
     }
     
     return retList;
+}
+
++ (NSArray *)extractorDefaultRecommendPlayList:(NSData *)data {
+    TFHpple *doc = [[TFHpple alloc] initWithHTMLData:data];
+    NSArray *elements = [doc searchWithXPathQuery:@"//ol[contains(@id,'playlist-autoscroll-list')]/li"];
+    NSMutableArray *videoList = [NSMutableArray array];
+    // 匹配空格和换行符的的真个表达式
+    NSRegularExpression *whiteSpaceAndNewLineRegex = [NSRegularExpression regularExpressionWithPattern:@"\n\\s*" options:0 error:nil];
+    for (TFHppleElement *element in elements) {
+        PlayItem *item = [PlayItem new];
+        // 解析id
+        NSArray *ids = [element searchWithXPathQuery:@"//@data-video-id"];
+        if (ids.count <= 0) {
+            continue;
+        }
+        item.vid = [ids[0] text];
+        // img
+        NSArray *thumbs = [element searchWithXPathQuery:@"//@data-thumbnail-url"];
+        if (thumbs.count <= 0) {
+            continue;
+        }
+        item.imgurl = [thumbs[0] text];
+        // title
+        NSArray *titles = [element searchWithXPathQuery:@"//@data-video-title"];
+        if (ids.count <= 0) {
+            continue;
+        }
+        item.title = [titles[0] text];
+        // author
+        NSArray *channels = [element searchWithXPathQuery:@"//@data-video-username"];
+        if (ids.count <= 0) {
+            continue;
+        }
+        item.channelName = [channels[0] text];
+        [videoList addObject:item];
+    }
+    return videoList;
 }
 @end

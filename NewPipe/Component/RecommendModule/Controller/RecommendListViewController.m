@@ -17,6 +17,8 @@
 #import "MJRefresh.h"
 #import "PlayItem.h"
 #import "NetWorkConstants.h"
+#import "MainTabController.h"
+#import "ZJDrawerController.h"
 
 static NSString *RecommendTableViewCellIdentifier = @"RecommendTableViewCellIdentifier";
 @interface RecommendListViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -37,7 +39,9 @@ static NSString *RecommendTableViewCellIdentifier = @"RecommendTableViewCellIden
 
 - (void)loadData {
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
-    NSString *url = [NSString stringWithFormat:@"%@%@%@YoutubeFeed.json", BASE_URL, PREFIX_URL, self.childPath];
+    if (self.url == nil) {
+        self.url = [NSString stringWithFormat:@"%@%@%@YoutubeFeed.json", BASE_URL, PREFIX_URL, self.childPath];
+    }
     @weakify(self)
     [RecommendItem getRecommendItemList:^(NSArray *playList, NSDictionary *pageInfo) {
         @strongify(self)
@@ -46,14 +50,34 @@ static NSString *RecommendTableViewCellIdentifier = @"RecommendTableViewCellIden
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
         [SVProgressHUD dismiss];
-    } url:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    } url:[self.url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if (self.type == 1) {
+        UIButton *butn = [UIButton buttonWithType:UIButtonTypeCustom];
+        butn.frame = CGRectMake(0, 0, 40, 40);
+        [butn setBackgroundImage:[UIImage imageNamed:@"close_rr"] forState:UIControlStateNormal];
+        [butn addTarget:self action:@selector(backButnClick:) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:butn];
+        
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+        self.navigationController.navigationBar.tintColor = UICOLOR_HEX(0xE54D42);
+        
+    }
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     self.navigationController.navigationBar.tintColor = UICOLOR_HEX(0xE54D42);
+}
+
+- (void)backButnClick:(id)sender {
+    MainTabController *mainTab = [[MainTabController alloc] init];
+    [self.zj_drawerController setupNewCenterViewController:mainTab closeDrawer:NO finishHandler:^(BOOL finished) {
+    }];
+    [self.zj_drawerController openLeftDrawerAnimated:YES finishHandler:^(BOOL finished) {
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
