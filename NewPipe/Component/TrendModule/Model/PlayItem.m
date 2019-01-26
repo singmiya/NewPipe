@@ -72,11 +72,20 @@
         }
         TFHppleElement *lookUpDiv = lookUpDivs[0];
         item.vid = [lookUpDiv text];
-        // 解析img
-        NSArray *thumbs = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@src"];
-        if (thumbs.count > 0) {
-            item.imgurl = [thumbs[0] text];
+        
+        NSArray *thumbs1 = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@src"];
+        NSArray *thumbs2 = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@data-thumb"];
+        if (thumbs1.count > 0) {
+            item.imgurl = [thumbs1[0] text];
+            if ([item.imgurl hasSuffix:@".gif"]) {
+                item.imgurl = [thumbs2[0] text];
+            }
         }
+//        // 解析img
+//        NSArray *thumbs = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@src"];
+//        if (thumbs.count > 0) {
+//            item.imgurl = [thumbs[0] text];
+//        }
         // 解析duration
         NSArray *durations = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/span"];
         if (durations.count > 0) {
@@ -147,10 +156,18 @@
         }
         item.vid = [ids[0] text];
         
-        NSArray *thumbs = [element searchWithXPathQuery:@"//div[@class='thumb-wrapper']/a/span/img/@data-thumb"];
-        if (thumbs.count > 0) {
-            item.imgurl = [thumbs[0] text];
+        NSArray *thumbs1 = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@src"];
+        NSArray *thumbs2 = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@data-thumb"];
+        if (thumbs1.count > 0) {
+            item.imgurl = [thumbs1[0] text];
+            if ([item.imgurl hasSuffix:@".gif"]) {
+                item.imgurl = [thumbs2[0] text];
+            }
         }
+//        NSArray *thumbs = [element searchWithXPathQuery:@"//div[@class='thumb-wrapper']/a/span/img/@data-thumb"];
+//        if (thumbs.count > 0) {
+//            item.imgurl = [thumbs[0] text];
+//        }
         // 解析duration
         NSArray *durations = [element searchWithXPathQuery:@"//span[@class='video-time']"];
         if (durations.count > 0) {

@@ -199,20 +199,95 @@ static NSString *const footerId = @"footerId";
 // 点击高亮
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CollectionListViewController *plVc = [[CollectionListViewController alloc] init];
-    if (self.firstDic) {
-        plVc.url = self.firstDic[@"url"];
-    } else {
-        plVc.dataSource = self.fetchRetVC.sections[indexPath.row].objects;
-    }
-    [self.navigationController pushViewController:plVc animated:YES];
+//    PlayViewController *plVc = [[PlayViewController alloc] init];
+//    __block NSMutableArray *dataSource = [NSMutableArray array];
+//    if (self.firstDic) {
+//        NSString *url = self.firstDic[@"url"];
+//        [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
+//        [PlayItem getVideoList:^(NSArray *videoList) {
+//            dataSource = (NSMutableArray *)videoList;
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                if (dataSource.count <= 0) {
+//                    [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"NilVideos", nil)];
+//                    return;
+//                }
+//                plVc.dataSource = dataSource;
+//                plVc.item = dataSource[0];
+//                [self presentViewController:plVc animated:YES completion:nil];
+//                [SVProgressHUD dismiss];
+//            });
+//        } withUrl:url];
+//    } else {
+//        for (CollectionItem *ci in self.fetchRetVC.sections[indexPath.row].objects) {
+//            PlayItem *pi = [PlayItem new];
+//            pi.vid = ci.vid;
+//            pi.title = ci.title;
+//            pi.channelName = ci.author;
+//            pi.imgurl = ci.imgurl;
+//            pi.goodnum = ci.goodnum;
+//            pi.playnum = ci.playnum;
+//            pi.badnum = ci.badnum;
+//            pi.duration = ci.duration;
+//            pi.lasttime = ci.lasttime;
+//            [dataSource addObject:ci];
+//        }
+//        if (dataSource.count <= 0) {
+//            [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"NilVideos", nil)];
+//            return;
+//        }
+//        plVc.dataSource = dataSource;
+//        plVc.item = dataSource[0];
+//        [self presentViewController:plVc animated:YES completion:nil];
+//    }
 }
 
 
 // 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    PlayViewController *plVc = [[PlayViewController alloc] init];
+    __block NSMutableArray *dataSource = [NSMutableArray array];
+    if (self.firstDic) {
+        if (indexPath.section == 0) {
+            NSString *url = self.firstDic[@"url"];
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
+            [PlayItem getVideoList:^(NSArray *videoList) {
+                dataSource = (NSMutableArray *)videoList;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (dataSource.count <= 0) {
+                        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"NilVideos", nil)];
+                        return;
+                    }
+                    plVc.dataSource = dataSource;
+                    plVc.item = dataSource[0];
+                    [self presentViewController:plVc animated:YES completion:nil];
+                    [SVProgressHUD dismiss];
+                });
+            } withUrl:url];
+            return;
+        }
+    }
+    for (CollectionItem *ci in self.fetchRetVC.sections[indexPath.row].objects) {
+        PlayItem *pi = [PlayItem new];
+        pi.vid = ci.vid;
+        pi.title = ci.title;
+        pi.channelName = ci.author;
+        pi.avatarImgUrl = ci.avatarImgUrl;
+        pi.imgurl = ci.imgurl;
+        pi.goodnum = ci.goodnum;
+        pi.playnum = ci.playnum;
+        pi.badnum = ci.badnum;
+        pi.duration = ci.duration;
+        pi.lasttime = ci.lasttime;
+        [dataSource addObject:pi];
+    }
+    if (dataSource.count <= 0) {
+        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"NilVideos", nil)];
+        return;
+    }
+    plVc.dataSource = dataSource;
+    plVc.item = dataSource[0];
+    [self presentViewController:plVc animated:YES completion:nil];
 }
 
 @end

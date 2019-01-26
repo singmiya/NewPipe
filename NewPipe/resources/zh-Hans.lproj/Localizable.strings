@@ -36,3 +36,6 @@ CFBundleDisplayName = "NewPipe";
 
 
 "views" = "次观看";
+
+
+"NilVideos" = "播放列表为空";

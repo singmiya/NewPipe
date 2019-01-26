@@ -35,3 +35,5 @@ CFBundleDisplayName = "NewPipe";
 "VideoUnavailable" = "Video is unavailable";
 
 "views" = "views";
+
+"NilVideos" = "play list is empty";

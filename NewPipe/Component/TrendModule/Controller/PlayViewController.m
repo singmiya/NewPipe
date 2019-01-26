@@ -40,7 +40,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 @property(nonatomic, weak) id <XCDYouTubeOperation> videoOperation;
 @property(nonatomic, strong) NSMutableArray<NSURL *> *videoQualitiesURLs;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, copy) NSArray *dataSource;
+
 @property (nonatomic, strong) HeadView *headView;
 @property (nonatomic, strong) UIView *nextTrackAlertView;
 @property (nonatomic, assign) NSInteger currentPlayIndex;
@@ -132,17 +132,23 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     };
     [self.containerView setImageWithURLString:self.item.imgurl placeholder:nil];
     
-    [PlayItem getVideoList:^(NSArray *videoList) {
-        @strongify(self)
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //刷新界面
-            self.dataSource = videoList;
-            //刷新界面
-            [self.tableView reloadData];
-        });
-    } withVid:self.item.vid];
+    if (self.dataSource == nil || self.dataSource.count <= 0) {
+        [PlayItem getVideoList:^(NSArray *videoList) {
+            @strongify(self)
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //刷新界面
+                self.dataSource = videoList;
+                //刷新界面
+                [self.tableView reloadData];
+            });
+        } withVid:self.item.vid];
+        self.currentPlayIndex = -1;
+    } else {
+        self.currentPlayIndex = 0;
+    }
+
     [self playVideo];
-    self.currentPlayIndex = -1;
+    
     // 播放完成
     self.player.playerDidToEnd = ^(id <ZFPlayerMediaPlayback> _Nonnull asset) {
         @strongify(self)
@@ -160,7 +166,6 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
         self.item = newItem;
         [self.containerView setImageWithURLString:self.item.imgurl placeholder:nil];
         [self playVideo];
-        
     };
 }
 

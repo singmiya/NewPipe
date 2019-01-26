@@ -53,7 +53,12 @@
             _durationLabel.hidden = YES;
         }
         _descriptionLabel.text = item.vdescription;
-        _viewsNumsLabel.text = [NSString stringWithFormat:@"%@ %@", [item.playnum convertNumber], NSLocalizedString(@"views", nil)];
+        if (item.playnum != nil) {
+            _viewsNumsLabel.text = [NSString stringWithFormat:@"%@ %@", [item.playnum convertNumber], NSLocalizedString(@"views", nil)];
+        } else {
+            _viewsNumsLabel.hidden = YES;
+        }
+        
         _dateLabel.text = item.lasttime;
         [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:IMAGE_URL(item.vid)] placeholderImage:[UIImage imageNamed:@"default"]];
     }

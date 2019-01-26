@@ -21,6 +21,8 @@
 @property (nullable, nonatomic, copy) NSString *goodnum;
 @property (nullable, nonatomic, copy) NSString *lasttime;
 @property (nullable, nonatomic, copy) NSString *vdescription;
+@property (nonatomic, copy) NSString *avatarImgUrl;
+
 
 /**
  * 通过接口加载推荐列表
