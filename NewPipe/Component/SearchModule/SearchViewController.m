@@ -22,7 +22,6 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
 @property (nonatomic, strong) UISearchController *searchController;
 
 @property (nonatomic, copy) NSMutableArray *dataSource;
-@property (nonatomic, strong) NSMutableArray *results;
 
 @property (nonatomic, assign) NSInteger currentPage;
 
@@ -35,7 +34,8 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
     // Do any additional setup after loading the view.
     [self.view addSubview:self.tableView];
     [SVProgressHUD themeConfigContainerView:self.view];
-    self.definesPresentationContext = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+//    self.definesPresentationContext = YES;
     _currentPage = 1;
 }
 
@@ -46,7 +46,13 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.searchController.searchBar.hidden = NO;
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.searchController.searchBar.hidden = YES;
+}
+
 - (void)loadData {
     __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
@@ -88,11 +94,12 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
             view.layer.borderColor = UICOLOR_HEX(0xE54D42).CGColor;
             view.layer.borderWidth = 1;
             view.layer.cornerRadius = 5.0;
-        } else if ([view isKindOfClass:NSClassFromString(@"UISearchBarTextFieldLabel")]) {
-//            (UILabel *)view
-        } else {
-
         }
+//        } else if ([view isKindOfClass:NSClassFromString(@"UISearchBarTextFieldLabel")]) {
+////            (UILabel *)view
+//        } else {
+//
+//        }
     }
     
     UITextField *searchField = [searchBar valueForKey:@"_searchField"];
@@ -102,7 +109,7 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
 //----- init table view
 - (UITableView *)tableView {
     if(!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - kStatusBarHeight - 49) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 49) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         UIView *view = [UIView new];
@@ -136,12 +143,6 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
     return _dataSource;
 }
 
-- (NSMutableArray *)results {
-    if (!_results) {
-        _results = [NSMutableArray array];
-    }
-    return _results;
-}
 #pragma mark -
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -168,12 +169,14 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PlayViewController *playVC = [[PlayViewController alloc] init];
     playVC.item = self.dataSource[indexPath.row];
-    [self presentViewController:playVC animated:YES completion:nil];
+    [playVC setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:playVC animated:YES];
 }
 
 #pragma mark -
 #pragma mark - UISearchResultsUpdating
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+
 }
 
 #pragma mark -

@@ -199,46 +199,6 @@ static NSString *const footerId = @"footerId";
 // 点击高亮
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    PlayViewController *plVc = [[PlayViewController alloc] init];
-//    __block NSMutableArray *dataSource = [NSMutableArray array];
-//    if (self.firstDic) {
-//        NSString *url = self.firstDic[@"url"];
-//        [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
-//        [PlayItem getVideoList:^(NSArray *videoList) {
-//            dataSource = (NSMutableArray *)videoList;
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                if (dataSource.count <= 0) {
-//                    [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"NilVideos", nil)];
-//                    return;
-//                }
-//                plVc.dataSource = dataSource;
-//                plVc.item = dataSource[0];
-//                [self presentViewController:plVc animated:YES completion:nil];
-//                [SVProgressHUD dismiss];
-//            });
-//        } withUrl:url];
-//    } else {
-//        for (CollectionItem *ci in self.fetchRetVC.sections[indexPath.row].objects) {
-//            PlayItem *pi = [PlayItem new];
-//            pi.vid = ci.vid;
-//            pi.title = ci.title;
-//            pi.channelName = ci.author;
-//            pi.imgurl = ci.imgurl;
-//            pi.goodnum = ci.goodnum;
-//            pi.playnum = ci.playnum;
-//            pi.badnum = ci.badnum;
-//            pi.duration = ci.duration;
-//            pi.lasttime = ci.lasttime;
-//            [dataSource addObject:ci];
-//        }
-//        if (dataSource.count <= 0) {
-//            [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"NilVideos", nil)];
-//            return;
-//        }
-//        plVc.dataSource = dataSource;
-//        plVc.item = dataSource[0];
-//        [self presentViewController:plVc animated:YES completion:nil];
-//    }
 }
 
 
@@ -260,7 +220,8 @@ static NSString *const footerId = @"footerId";
                     }
                     plVc.dataSource = dataSource;
                     plVc.item = dataSource[0];
-                    [self presentViewController:plVc animated:YES completion:nil];
+                    [plVc setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:plVc animated:YES];
                     [SVProgressHUD dismiss];
                 });
             } withUrl:url];
@@ -287,7 +248,8 @@ static NSString *const footerId = @"footerId";
     }
     plVc.dataSource = dataSource;
     plVc.item = dataSource[0];
-    [self presentViewController:plVc animated:YES completion:nil];
+    [plVc setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:plVc animated:YES];
 }
 
 @end

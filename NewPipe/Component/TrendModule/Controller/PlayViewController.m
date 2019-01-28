@@ -54,6 +54,8 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
     [SVProgressHUD themeConfigContainerView:self.view];
 
     [self.view addSubview:self.containerView];
@@ -68,7 +70,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     self.player = [ZFPlayerController playerWithPlayerManager:playerManager containerView:self.containerView];
     self.player.controlView = self.controlView;
     // 设置退到后台继续播放
-    self.player.pauseWhenAppResignActive = YES;
+    self.player.pauseWhenAppResignActive = NO;
     self.player.statusBarHidden = YES;
     self.controlView.portraitControlView.topToolView.hidden = YES;
     @weakify(self)
@@ -264,7 +266,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 
 - (void)backToList {
     [self.player stop];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)changeBackButnStatus {

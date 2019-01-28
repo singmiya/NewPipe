@@ -8,9 +8,9 @@
 
 #ifndef NetWorkConstants_h
 #define NetWorkConstants_h
-#define BASE_URL @"http://molinmusic.com/"
+#define BASE_URL @"https://molinmusic.com/"
 #define BASE_URL1 @"http://maoyingmusic.net/"
-#define PREFIX_URL @"YoutubeFeed/Test/YoutubeDev/"
+#define PREFIX_URL @"YoutubeFeed/Vizplay/iOSTest/"
 // Youtube相关
 #define IMAGE_URL(id) [NSString stringWithFormat:@"https://i.ytimg.com/vi/%@/hqdefault.jpg", id]
 #define TRENDING_URL @"https://www.youtube.com/feed/trending"
@@ -21,5 +21,5 @@
 #define PLAY_LIST @"YoutubeFeed.json"
 
 // Recommend Module
-#define RECOMMEND_LIST @"YoutubeFeed/Test/YoutubeDev/Youtubefeed.json"
+#define RECOMMEND_LIST @"YoutubeFeed/Vizplay/iOSTest/Youtubefeed.json"
 #endif /* NetWorkConstants_h */

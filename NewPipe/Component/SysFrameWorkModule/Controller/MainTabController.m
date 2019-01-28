@@ -26,13 +26,15 @@
     UINavigationController *recommendNavi = [[UINavigationController alloc] initWithRootViewController:recommendVC];
     [self setTabBarItem:recommendNavi.tabBarItem title:NSLocalizedString(@"Recommended", nil) titleSize:12.0 titleFontName:@"HeiTi SC" selectedImage:@"selected_recommend" selectedTitleColor:UICOLOR_HEX(0xE54D42) normalImage:@"normal_recommend" normalTitleColor:UICOLOR_HEX(0x979797)];
     TrendViewController *trendVC = [[TrendViewController alloc] init];
-    [self setTabBarItem:trendVC.tabBarItem title:NSLocalizedString(@"Trending", nil) titleSize:12.0 titleFontName:@"HeiTi SC" selectedImage:@"selected_trending" selectedTitleColor:UICOLOR_HEX(0xE54D42) normalImage:@"normal_trending" normalTitleColor:UICOLOR_HEX(0x979797)];
+    UINavigationController *trendNavi = [[UINavigationController alloc] initWithRootViewController:trendVC];
+    [self setTabBarItem:trendNavi.tabBarItem title:NSLocalizedString(@"Trending", nil) titleSize:12.0 titleFontName:@"HeiTi SC" selectedImage:@"selected_trending" selectedTitleColor:UICOLOR_HEX(0xE54D42) normalImage:@"normal_trending" normalTitleColor:UICOLOR_HEX(0x979797)];
     CollectionViewController *collectionVC = [[CollectionViewController alloc] init];
     UINavigationController *collectionNavi = [[UINavigationController alloc] initWithRootViewController:collectionVC];
     [self setTabBarItem:collectionNavi.tabBarItem title:NSLocalizedString(@"Collection", nil) titleSize:12.0 titleFontName:@"HeiTi SC" selectedImage:@"selected_recommend" selectedTitleColor:UICOLOR_HEX(0xE54D42) normalImage:@"normal_recommend" normalTitleColor:UICOLOR_HEX(0x979797)];
     SearchViewController *searchVC = [[SearchViewController alloc] init];
+    UINavigationController *searchVCNavi = [[UINavigationController alloc] initWithRootViewController:searchVC];
     [self setTabBarItem:searchVC.tabBarItem title:NSLocalizedString(@"Searching", nil) titleSize:12.0 titleFontName:@"HeiTi SC" selectedImage:@"selected_search" selectedTitleColor:UICOLOR_HEX(0xE54D42) normalImage:@"normal_search" normalTitleColor:UICOLOR_HEX(0x979797)];
-    self.viewControllers = @[recommendNavi, trendVC, collectionNavi, searchVC];
+    self.viewControllers = @[recommendNavi, trendNavi, collectionNavi, searchVCNavi];
 }
 
 - (void)didReceiveMemoryWarning {

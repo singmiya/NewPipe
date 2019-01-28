@@ -134,7 +134,8 @@ static NSString *RecommendTableViewCellIdentifier = @"RecommendTableViewCellIden
     item.imgurl = IMAGE_URL(rItem.vid);
     item.title = rItem.title;
     playVC.item = item;
-    [self presentViewController:playVC animated:YES completion:nil];
+    [playVC setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:playVC animated:YES];
 }
 
 @end

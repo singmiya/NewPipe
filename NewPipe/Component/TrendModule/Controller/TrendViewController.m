@@ -29,7 +29,7 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
     // Do any additional setup after loading the view.
     [self.view addSubview:self.tableView];
     [SVProgressHUD themeConfigContainerView:self.view];
-    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self loadData];
 }
 - (void)loadData {
@@ -53,7 +53,7 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
 //----- init table view
 - (UITableView *)tableView {
     if(!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds) - kStatusBarHeight - 49) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds) - 49) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];
@@ -98,6 +98,7 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PlayViewController *playVC = [[PlayViewController alloc] init];
     playVC.item = self.dataSource[indexPath.row];
-    [self presentViewController:playVC animated:YES completion:nil];
+    [playVC setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:playVC animated:YES];
 }
 @end

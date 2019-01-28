@@ -121,6 +121,14 @@
         //    NSString *path = [NSString stringWithFormat:@"%@/trending1.html", [[NSBundle mainBundle] bundlePath]];
         //    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
         NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:VIDEO_LIST_URL(vid)]];
+        NSError *error = nil;
+        NSLog(@"The file is %lu bytes", (unsigned long)[data length]);
+        NSString *fileStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
+        BOOL written = [data writeToFile:[fileStr stringByAppendingPathComponent:@"related123.html"] options:0 error:&error];
+        if(!written){
+            NSLog(@"write failed: %@", [error localizedDescription]);
+        }
+
         callBack([PlayItem extractorRelatedVideoList:vid data:data]);
     });
 }
@@ -158,16 +166,16 @@
         
         NSArray *thumbs1 = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@src"];
         NSArray *thumbs2 = [element searchWithXPathQuery:@"//span[@class='yt-thumb-simple']/img/@data-thumb"];
+        NSArray *thumbs3 = [element searchWithXPathQuery:@"//div[@class='thumb-wrapper']/a/span/img/@data-thumb"];
         if (thumbs1.count > 0) {
             item.imgurl = [thumbs1[0] text];
             if ([item.imgurl hasSuffix:@".gif"]) {
                 item.imgurl = [thumbs2[0] text];
             }
+        } else if (thumbs3.count) {
+             item.imgurl = [thumbs3[0] text];
         }
-//        NSArray *thumbs = [element searchWithXPathQuery:@"//div[@class='thumb-wrapper']/a/span/img/@data-thumb"];
-//        if (thumbs.count > 0) {
-//            item.imgurl = [thumbs[0] text];
-//        }
+
         // 解析duration
         NSArray *durations = [element searchWithXPathQuery:@"//span[@class='video-time']"];
         if (durations.count > 0) {

@@ -20,6 +20,8 @@
 	<string>1.0.5</string>
 	<key>CFBundleVersion</key>
 	<string>6</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -27,6 +29,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>cameraDescription</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>microphoneDescription</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>photoLibraryDescription</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
