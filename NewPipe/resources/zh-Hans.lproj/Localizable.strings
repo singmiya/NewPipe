@@ -5,37 +5,18 @@
   Created by Somiya on 2018/12/9.
   Copyright © 2018 Somiya. All rights reserved.
 */
-CFBundleDisplayName = "NewPipe";
-// tab
-"Recommended" = "推荐";
-"Trending" = "流行";
-"Collection" = "收藏";
-"Searching" = "收藏";
-
-
-"AboutUS" = "关于我们";
-"Like" = "赞一个";
-"Praise" = "好评";
-"Privacy" = "隐私政策";
-
+CFBundleDisplayName = "PickTag";
 "Cancel" = "取消";
 "Confirm" = "确定";
 "Warring" = "警告";
 "Title" = "设置播放列表标题";
 "NotNull" = "播放列表标题不能为空";
+"AddNewTag" = "添加新播放列表名称";
+"Add" = "添加";
 
 "Loading" = "加载中...";
 "KeyWords" = "关键词";
 "PlayList" = "即将播放";
 
-//
-"ListOver" = "列表播放完毕";
-"Collected" = "已收藏";
-"HasCollected" = "此视频已收藏过";
-"VideoUnavailable" = "视频不可用";
-
-
-"views" = "次观看";
-
-
 "NilVideos" = "播放列表为空";
+"ListNameNOtNil" = "请选择播放列表名称！";

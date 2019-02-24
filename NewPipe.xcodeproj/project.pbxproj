@@ -77,6 +77,10 @@
 		E7B99823217CCC66006C32F3 /* data.html in Resources */ = {isa = PBXBuildFile; fileRef = E7B99822217CCC66006C32F3 /* data.html */; };
 		E7D051EF21957C18007A96BD /* CollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7D051EC21957C18007A96BD /* CollectionTableViewCell.xib */; };
 		E7D051F021957C18007A96BD /* CollectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7D051EE21957C18007A96BD /* CollectionTableViewCell.m */; };
+		E7DB877F2221D53C00009D73 /* CollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7DB87792221D53C00009D73 /* CollectionHeaderView.m */; };
+		E7DB87802221D53C00009D73 /* PickTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7DB877A2221D53C00009D73 /* PickTagView.m */; };
+		E7DB87812221D53C00009D73 /* UICollectionViewLeftAlignedLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E7DB877B2221D53C00009D73 /* UICollectionViewLeftAlignedLayout.m */; };
+		E7DB87822221D53C00009D73 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7DB877C2221D53C00009D73 /* CollectionViewCell.m */; };
 		E7F0BB7B218D94EA00DD1FF9 /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F0BB7A218D94EA00DD1FF9 /* NSString+Util.m */; };
 		E7F0BB7E218D9A7B00DD1FF9 /* SVProgressHUD+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F0BB7D218D9A7B00DD1FF9 /* SVProgressHUD+Util.m */; };
 /* End PBXBuildFile section */
@@ -230,6 +234,14 @@
 		E7D051EC21957C18007A96BD /* CollectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionTableViewCell.xib; sourceTree = "<group>"; };
 		E7D051ED21957C18007A96BD /* CollectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionTableViewCell.h; sourceTree = "<group>"; };
 		E7D051EE21957C18007A96BD /* CollectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionTableViewCell.m; sourceTree = "<group>"; };
+		E7DB87772221D53C00009D73 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
+		E7DB87782221D53C00009D73 /* UICollectionViewLeftAlignedLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewLeftAlignedLayout.h; sourceTree = "<group>"; };
+		E7DB87792221D53C00009D73 /* CollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionHeaderView.m; sourceTree = "<group>"; };
+		E7DB877A2221D53C00009D73 /* PickTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickTagView.m; sourceTree = "<group>"; };
+		E7DB877B2221D53C00009D73 /* UICollectionViewLeftAlignedLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICollectionViewLeftAlignedLayout.m; sourceTree = "<group>"; };
+		E7DB877C2221D53C00009D73 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
+		E7DB877D2221D53C00009D73 /* CollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionHeaderView.h; sourceTree = "<group>"; };
+		E7DB877E2221D53C00009D73 /* PickTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickTagView.h; sourceTree = "<group>"; };
 		E7F0BB79218D94EA00DD1FF9 /* NSString+Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
 		E7F0BB7A218D94EA00DD1FF9 /* NSString+Util.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
 		E7F0BB7C218D9A7B00DD1FF9 /* SVProgressHUD+Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD+Util.h"; sourceTree = "<group>"; };
@@ -700,6 +712,7 @@
 		E7B99812217CBC2A006C32F3 /* ThridPart */ = {
 			isa = PBXGroup;
 			children = (
+				E7DB87762221D53C00009D73 /* PickTag */,
 				E753FFC02189487600A68F51 /* ZFPlayer */,
 				E7B99813217CBC5D006C32F3 /* hpple */,
 			);
@@ -717,6 +730,21 @@
 				E7B99814217CBC6D006C32F3 /* XPathQuery.m */,
 			);
 			path = hpple;
+			sourceTree = "<group>";
+		};
+		E7DB87762221D53C00009D73 /* PickTag */ = {
+			isa = PBXGroup;
+			children = (
+				E7DB87772221D53C00009D73 /* CollectionViewCell.h */,
+				E7DB877C2221D53C00009D73 /* CollectionViewCell.m */,
+				E7DB87782221D53C00009D73 /* UICollectionViewLeftAlignedLayout.h */,
+				E7DB877B2221D53C00009D73 /* UICollectionViewLeftAlignedLayout.m */,
+				E7DB877D2221D53C00009D73 /* CollectionHeaderView.h */,
+				E7DB87792221D53C00009D73 /* CollectionHeaderView.m */,
+				E7DB877E2221D53C00009D73 /* PickTagView.h */,
+				E7DB877A2221D53C00009D73 /* PickTagView.m */,
+			);
+			path = PickTag;
 			sourceTree = "<group>";
 		};
 		E7F0BB78218D94CC00DD1FF9 /* Category */ = {
@@ -959,6 +987,7 @@
 				E793BBBD21A1BE7800C2657E /* SettingViewController.m in Sources */,
 				E7B9981C217CBC6E006C32F3 /* TFHpple.m in Sources */,
 				E753FFEF2189487700A68F51 /* ZFSliderView.m in Sources */,
+				E7DB87812221D53C00009D73 /* UICollectionViewLeftAlignedLayout.m in Sources */,
 				E79FD1D421744D4B0045589B /* RecommendViewController.m in Sources */,
 				E79F4C7D21C2581C00E6024E /* RecommendListViewController.m in Sources */,
 				E747C391218AE88000FB2B7A /* HeadView.m in Sources */,
@@ -968,9 +997,12 @@
 				E78B4C5F21C28A52003581FB /* UIButton+Util.m in Sources */,
 				E747BF1121731C9700A05623 /* BaseTableViewCell.m in Sources */,
 				E753FFED2189487700A68F51 /* ZFNetworkSpeedMonitor.m in Sources */,
+				E7DB87802221D53C00009D73 /* PickTagView.m in Sources */,
 				E747BEBA2172DC2A00A05623 /* AppDelegate.m in Sources */,
 				E73D15E621BFEEBB00A8DD7C /* CollectionViewCell.m in Sources */,
 				E7F0BB7B218D94EA00DD1FF9 /* NSString+Util.m in Sources */,
+				E7DB877F2221D53C00009D73 /* CollectionHeaderView.m in Sources */,
+				E7DB87822221D53C00009D73 /* CollectionViewCell.m in Sources */,
 				2EBD9CA210C2F565ADC03D32 /* PlayItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

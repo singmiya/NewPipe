@@ -28,6 +28,7 @@
 #import "CollectionItem+CoreDataClass.h"
 #import <MagicalRecord/MagicalRecord.h>
 #import "Constant.h"
+#import "PickTagView.h"
 
 static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 @interface PlayViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -45,6 +46,8 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 @property (nonatomic, strong) UIView *nextTrackAlertView;
 @property (nonatomic, assign) NSInteger currentPlayIndex;
 @property (nonatomic, strong) VideoInfo *currentVInfo;
+
+@property (nonatomic, strong) PickTagView *pickTagView;
 @end
 
 @implementation PlayViewController
@@ -55,6 +58,12 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    NSFetchedResultsController *fetchRetVC = [CollectionItem MR_fetchAllGroupedBy:@"listName" withPredicate:nil sortedBy:@"updateTime" ascending:NO];
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:fetchRetVC.sections.count];
+    for (id<NSFetchedResultsSectionInfo> info in fetchRetVC.sections) {
+        [arr addObject:info.name];
+    }
+    [self initPickTagView:arr];
     
     [SVProgressHUD themeConfigContainerView:self.view];
 
@@ -84,49 +93,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     // 点击收藏按钮的回调
     self.headView.addBtnCallBack = ^(void) {
         @strongify(self)
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Title", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addTextFieldWithConfigurationHandler:nil];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [SVProgressHUD show];
-            __block int show_type = 2;
-            if (alertController.textFields.firstObject.text.length <= 0) {
-                return;
-            }
-            
-            [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext * _Nonnull localContext) {
-                CollectionItem *item = [CollectionItem MR_findFirstByAttribute:@"vid" withValue:self.item.vid inContext:localContext];
-                if (item) {
-                    show_type = 0; // 已收藏
-                    item.updateTime = [NSDate date];
-                    return;
-                }
-                show_type = 1;
-                item = [CollectionItem MR_createEntityInContext:localContext];
-                item.vid = self.item.vid;
-                item.title = self.item.title;
-                item.imgurl = self.item.imgurl;
-                item.author = self.item.channelName;
-                item.playnum = self.item.playnum;
-                item.badnum = self.item.badnum;
-                item.goodnum = self.item.goodnum;
-                item.lasttime = self.item.lasttime;
-                item.duration = self.item.duration;
-                item.avatarImgUrl = self.currentVInfo.avatarImgUrl;
-                item.createTime = [NSDate date];
-                item.updateTime = [NSDate date];
-                item.listName = alertController.textFields.firstObject.text;
-            }];
-            if (show_type == 0) {
-                [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"HasCollected", nil)];
-            } else if (show_type == 1) {
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Collected", nil)];
-            } else {
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"NotNull", nil)];
-            }
-        }]];
-        [self presentViewController:alertController animated:YES completion:nil];
-        
+        [self.pickTagView showPickTagViewInView:self.view];
     };
     self.headView.praiseBtnCallBack = ^(void) {
 #pragma TODO 好评跳转
@@ -169,6 +136,52 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
         [self.containerView setImageWithURLString:self.item.imgurl placeholder:nil];
         [self playVideo];
     };
+}
+
+- (void)initPickTagView:(NSArray *)dataSource {
+    self.pickTagView = [[PickTagView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 150) dataSource:dataSource];
+    @weakify(self)
+    [self.pickTagView setConfirmAction:^(NSString *title) {
+        @strongify(self)
+        NSLog(@"confirm butn clicked!!! %@", title);
+        [SVProgressHUD show];
+        __block int show_type = 2;
+        if (title.length <= 0) {
+            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"ListNameNOtNil", nil)];
+            return;
+        }
+        
+        [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext * _Nonnull localContext) {
+            CollectionItem *item = [CollectionItem MR_findFirstByAttribute:@"vid" withValue:self.item.vid inContext:localContext];
+            if (item) {
+                show_type = 0; // 已收藏
+                item.updateTime = [NSDate date];
+                return;
+            }
+            show_type = 1;
+            item = [CollectionItem MR_createEntityInContext:localContext];
+            item.vid = self.item.vid;
+            item.title = self.item.title;
+            item.imgurl = self.item.imgurl;
+            item.author = self.item.channelName;
+            item.playnum = self.item.playnum;
+            item.badnum = self.item.badnum;
+            item.goodnum = self.item.goodnum;
+            item.lasttime = self.item.lasttime;
+            item.duration = self.item.duration;
+            item.avatarImgUrl = self.currentVInfo.avatarImgUrl;
+            item.createTime = [NSDate date];
+            item.updateTime = [NSDate date];
+            item.listName = title;
+        }];
+        if (show_type == 0) {
+            [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"HasCollected", nil)];
+        } else if (show_type == 1) {
+            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Collected", nil)];
+        } else {
+            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"NotNull", nil)];
+        }
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
