@@ -29,6 +29,7 @@
 #import <MagicalRecord/MagicalRecord.h>
 #import "Constant.h"
 #import "PickTagView.h"
+#import "UIButton+Util.h"
 
 static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 @interface PlayViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -48,6 +49,9 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 @property (nonatomic, strong) VideoInfo *currentVInfo;
 
 @property (nonatomic, strong) PickTagView *pickTagView;
+
+@property (nonatomic, strong) UIButton *nextTrack; // 下一首
+@property (nonatomic, strong) UIButton *previousTrack; // 上一首
 @end
 
 @implementation PlayViewController
@@ -139,7 +143,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
 }
 
 - (void)initPickTagView:(NSArray *)dataSource {
-    self.pickTagView = [[PickTagView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 150) dataSource:dataSource];
+    self.pickTagView = [[PickTagView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 150) dataSource:dataSource delegate:self];
     @weakify(self)
     [self.pickTagView setConfirmAction:^(NSString *title) {
         @strongify(self)
@@ -224,6 +228,57 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     x = (CGRectGetWidth(self.containerView.frame) - w) / 2;
     y = (CGRectGetHeight(self.containerView.frame) - h) / 2;
     self.playBtn.frame = CGRectMake(x, y, w, h);
+}
+
+- (void)customPlayView {
+    float x = CGRectGetWidth(self.view.frame) / 2 - 20;
+    float y = CGRectGetWidth(self.view.frame) / 2 - 20;
+    self.nextTrack = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.nextTrack setTintColor:[UIColor whiteColor]];
+    [self.nextTrack addTarget:self action:@selector(nextTrackDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.nextTrack setImage:[UIImage imageNamed:@"next"] forState:UIControlStateNormal];
+    self.nextTrack.frame = CGRectMake(x - 150, y, 40, 40);
+    [self.controlView.landScapeControlView addSubview:self.nextTrack];
+    
+    self.previousTrack = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.previousTrack setTintColor:[UIColor whiteColor]];
+    [self.previousTrack addTarget:self action:@selector(nextTrackDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.previousTrack setImage:[UIImage imageNamed:@"previous"] forState:UIControlStateNormal];
+    self.nextTrack.frame = CGRectMake(x + 110, y, 40, 40);
+    [self.controlView.landScapeControlView addSubview:self.previousTrack];
+}
+
+- (void)nextTrackDidClick:(id)sender {
+    [self.player stop];
+    self.currentPlayIndex ++;
+    // 播放下一首
+    if (self.currentPlayIndex >= self.dataSource.count) {
+        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"ListOver", nil)];
+        return;
+    }
+    PlayItem *newItem = self.dataSource[self.currentPlayIndex];
+    if ([newItem.vid isEqualToString:self.item.vid]) {
+        return;
+    }
+    self.item = newItem;
+    [self.containerView setImageWithURLString:self.item.imgurl placeholder:nil];
+    [self playVideo];
+}
+- (void)previousTrackDidClick:(id)sender {
+    [self.player stop];
+    self.currentPlayIndex --;
+    // 播放上一首
+    if (self.currentPlayIndex < 0) {
+        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"FirstVideo", nil)];
+        return;
+    }
+    PlayItem *newItem = self.dataSource[self.currentPlayIndex];
+    if ([newItem.vid isEqualToString:self.item.vid]) {
+        return;
+    }
+    self.item = newItem;
+    [self.containerView setImageWithURLString:self.item.imgurl placeholder:nil];
+    [self playVideo];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -353,6 +408,7 @@ static NSString *TableViewCellIdentifier = @"TableViewCellIdentifier";
     if (!_controlView) {
         _controlView = [ZFPlayerControlView new];
         _controlView.fastViewAnimated = YES;
+        [self customPlayView];
     }
     return _controlView;
 }

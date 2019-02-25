@@ -5,7 +5,19 @@
   Created by Somiya on 2018/12/9.
   Copyright © 2018 Somiya. All rights reserved.
 */
-CFBundleDisplayName = "PickTag";
+CFBundleDisplayName = "NewPipe";
+// tab
+"Recommended" = "Recommended";
+"Trending" = "Trending";
+"Collection" = "Collection";
+"Searching" = "Searching";
+
+
+"AboutUS" = "About Us";
+"Like" = "Like";
+"Praise" = "Like";
+"Privacy" = "Privacy Policy";
+
 "Cancel" = "Cancel";
 "Confirm" = "Confirm";
 "Warring" = "Warring";
@@ -17,6 +29,15 @@ CFBundleDisplayName = "PickTag";
 "Loading" = "Loading...";
 "KeyWords" = "Key Words";
 "PlayList" = "Play List";
+
+//
+"FirstVideo" = "Already is the first video";
+"ListOver" = "The list was over";
+"Collected" = "Collected";
+"HasCollected" = "This video has been collection";
+"VideoUnavailable" = "Video is unavailable";
+
+"views" = "views";
 
 "NilVideos" = "play list is empty";
 "ListNameNOtNil" = "Please select play list name!";
