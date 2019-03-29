@@ -23,7 +23,7 @@
 #define KToolBarHeight                             44
 
 #import "PickTagView.h"
-#import "CollectionViewCell.h"
+#import "PickTagCollectionViewCell.h"
 #import "UICollectionViewLeftAlignedLayout.h"
 #import "CollectionHeaderView.h"
 #import "ColorUtil.h"
@@ -39,11 +39,10 @@ static NSString * const kHeaderViewCellIdentifier = @"HeaderViewCellIdentifier";
 @property (nonatomic, strong) NSMutableArray   *dataSource;
 @property (nonatomic, strong) NSIndexPath *lastIP;
 @property (nonatomic, strong) NSIndexPath *currentIP;
-@property (nonatomic, assign) id delegate;
 @end
 @implementation PickTagView
 
-- (instancetype)initWithFrame:(CGRect)frame dataSource:(NSArray *)dataSource delegate:(id)delegate {
+- (instancetype)initWithFrame:(CGRect)frame dataSource:(NSArray *)dataSource {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor blackColor];
@@ -52,7 +51,6 @@ static NSString * const kHeaderViewCellIdentifier = @"HeaderViewCellIdentifier";
         self.dataSource = [dataSource mutableCopy];
         self.lastIP = nil;
         self.currentIP = nil;
-        self.delegate = delegate;
     }
     return self;
 }
@@ -64,7 +62,7 @@ static NSString * const kHeaderViewCellIdentifier = @"HeaderViewCellIdentifier";
         _collectionView = [[UICollectionView alloc] initWithFrame:collectionViewFrame collectionViewLayout:layout];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
-        [_collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:kCellIdentifier];
+        [_collectionView registerClass:[PickTagCollectionViewCell class] forCellWithReuseIdentifier:kCellIdentifier];
         _collectionView.allowsMultipleSelection = YES;
         
         [_collectionView registerClass:[CollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kHeaderViewCellIdentifier];
@@ -81,7 +79,7 @@ static NSString * const kHeaderViewCellIdentifier = @"HeaderViewCellIdentifier";
     if (_toolbar == nil) {
         _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, KToolBarHeight)];
         _toolbar.barStyle = UIBarStyleBlack;
-        UIBarButtonItem *confirmButn = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Confirm", nil) style:UIBarButtonItemStylePlain target:self action:@selector(confirmDidClick:)];
+        UIBarButtonItem *confirmButn = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Confirm", nil) style:UIBarButtonItemStylePlain target:self action:@selector(confirmButnDidClick:)];
         [confirmButn setTintColor:UICOLOR_HEX(0xE54D42)];
         UIBarButtonItem *cancelButn = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelDidClick:)];
         [cancelButn setTintColor:UICOLOR_HEX(0xE54D42)];
@@ -95,10 +93,10 @@ static NSString * const kHeaderViewCellIdentifier = @"HeaderViewCellIdentifier";
 }
 
 #pragma mark - actions
-- (void)confirmDidClick:(id)sender {
-    if (self.confirmAction != nil) {
-        CollectionViewCell *cell = (CollectionViewCell *) [self.collectionView cellForItemAtIndexPath:self.currentIP];
-        self.confirmAction(cell.titleLabel.text);
+- (void)confirmButnDidClick:(id)sender {
+    if (self.ptDelegate && [self.ptDelegate  respondsToSelector:@selector(confirmDidClick:)]) {
+        PickTagCollectionViewCell *cell = (PickTagCollectionViewCell *) [self.collectionView cellForItemAtIndexPath:self.currentIP];
+        [self.ptDelegate confirmDidClick:cell.titleLabel.text];
         [self hidePickTagView];
     }
 }
@@ -120,7 +118,9 @@ static NSString * const kHeaderViewCellIdentifier = @"HeaderViewCellIdentifier";
         self.lastIP = nil;
         self.currentIP = nil;
     }]];
-    [_delegate presentViewController:alertController animated:YES completion:nil];
+    if (self.ptDelegate && [self.ptDelegate respondsToSelector:@selector(addTagDidClick:)]) {
+        [self.ptDelegate addTagDidClick:alertController];
+    }
 }
 
 - (void)showPickTagViewInView:(UIView *)view {
@@ -158,7 +158,7 @@ static NSString * const kHeaderViewCellIdentifier = @"HeaderViewCellIdentifier";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CollectionViewCell *cell = (CollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
+    PickTagCollectionViewCell *cell = (PickTagCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
     cell.titleLabel.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
     //cell.titleLabel.backgroundColor = [UIColor orangeColor];
     cell.titleLabel.text = self.dataSource[indexPath.row];
@@ -170,11 +170,11 @@ static NSString * const kHeaderViewCellIdentifier = @"HeaderViewCellIdentifier";
     NSLog(@"%ld",indexPath.row);
     self.lastIP = self.currentIP;
     if (self.lastIP != nil) {
-        CollectionViewCell *lastCell = (CollectionViewCell *) [self.collectionView cellForItemAtIndexPath:self.lastIP];
+        PickTagCollectionViewCell *lastCell = (PickTagCollectionViewCell *) [self.collectionView cellForItemAtIndexPath:self.lastIP];
         [lastCell unselect];
     }
     self.currentIP = indexPath;
-    CollectionViewCell *currentCell = (CollectionViewCell *) [self.collectionView cellForItemAtIndexPath:self.currentIP];
+    PickTagCollectionViewCell *currentCell = (PickTagCollectionViewCell *) [self.collectionView cellForItemAtIndexPath:self.currentIP];
     [currentCell select];
 }
 

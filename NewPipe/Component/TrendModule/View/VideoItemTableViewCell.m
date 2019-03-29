@@ -88,6 +88,8 @@
 - (UIImageView *)videoImageView {
     if(!_videoImageView) {
         _videoImageView = [[UIImageView alloc] init];
+        [_videoImageView setContentMode:UIViewContentModeScaleAspectFill];
+        [_videoImageView setClipsToBounds:YES];
     }
     return _videoImageView;
 }

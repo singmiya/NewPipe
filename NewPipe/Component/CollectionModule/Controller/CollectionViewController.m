@@ -228,7 +228,13 @@ static NSString *const footerId = @"footerId";
             return;
         }
     }
-    for (CollectionItem *ci in self.fetchRetVC.sections[indexPath.row].objects) {
+    NSInteger index = 0;
+    if (self.firstDic) {
+        index = indexPath.section - 1;
+    } else {
+        index = indexPath.section;
+    }
+    for (CollectionItem *ci in self.fetchRetVC.sections[index].objects) {
         PlayItem *pi = [PlayItem new];
         pi.vid = ci.vid;
         pi.title = ci.title;

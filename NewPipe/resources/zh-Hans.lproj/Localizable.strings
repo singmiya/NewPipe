@@ -9,8 +9,9 @@ CFBundleDisplayName = "NewPipe";
 // tab
 "Recommended" = "推荐";
 "Trending" = "流行";
+"Channel" = "频道";
 "Collection" = "收藏";
-"Searching" = "收藏";
+"Searching" = "搜索";
 
 "AboutUS" = "关于我们";
 "Like" = "赞一个";
@@ -37,6 +38,7 @@ CFBundleDisplayName = "NewPipe";
 "VideoUnavailable" = "视频不可用";
 
 "views" = "次观看";
+"subscriptions" = "次订阅";
 
 "NilVideos" = "播放列表为空";
 "ListNameNOtNil" = "请选择播放列表名称！";

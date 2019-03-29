@@ -1,39 +1,49 @@
 PODS:
-  - AFNetworking (3.1.0):
-    - AFNetworking/NSURLSession (= 3.1.0)
-    - AFNetworking/Reachability (= 3.1.0)
-    - AFNetworking/Security (= 3.1.0)
-    - AFNetworking/Serialization (= 3.1.0)
-    - AFNetworking/UIKit (= 3.1.0)
-  - AFNetworking/NSURLSession (3.1.0):
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.1.0)
-  - AFNetworking/Security (3.1.0)
-  - AFNetworking/Serialization (3.1.0)
-  - AFNetworking/UIKit (3.1.0):
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - CocoaLumberjack (3.5.2):
+    - CocoaLumberjack/Core (= 3.5.2)
+  - CocoaLumberjack/Core (3.5.2)
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
   - Masonry (1.0.2)
   - MJRefresh (3.1.12)
+  - NSLogger (1.9.7):
+    - NSLogger/ObjC (= 1.9.7)
+  - NSLogger/ObjC (1.9.7)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - SVProgressHUD (2.1.2)
+  - XCDLumberjackNSLogger (1.1.1):
+    - CocoaLumberjack (>= 2.0)
+    - NSLogger (>= 1.7)
   - XCDYouTubeKit (2.5.5)
   - youtube-ios-player-helper (0.1.6)
   - YYModel (1.0.4)
 
 DEPENDENCIES:
-  - AFNetworking (~> 3.0)
+  - AFNetworking (~> 3.2.1)
   - MagicalRecord
   - Masonry
   - MJRefresh (~> 3.1.12)
   - SDWebImage (~> 4.0)
   - SVProgressHUD
+  - XCDLumberjackNSLogger (~> 1.0)
   - XCDYouTubeKit (~> 2.5.5)
   - youtube-ios-player-helper (~> 0.1.4)
   - YYModel
@@ -41,26 +51,32 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - CocoaLumberjack
     - MagicalRecord
     - Masonry
     - MJRefresh
+    - NSLogger
     - SDWebImage
     - SVProgressHUD
+    - XCDLumberjackNSLogger
     - XCDYouTubeKit
     - youtube-ios-player-helper
     - YYModel
 
 SPEC CHECKSUMS:
-  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  CocoaLumberjack: 118bf4a820efc641f79fa487b75ed928dccfae23
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  NSLogger: cf3013a4fba189f631f07e6c3d5b8ce2b209654b
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  XCDLumberjackNSLogger: 5929772477ead3b856c34825698bd69ab1a15bfc
   XCDYouTubeKit: 86f4e7a9c2baa7b7adf6abfc28ac3ab34927be2d
   youtube-ios-player-helper: 21ab92db027c7ff86cb17a3843a3f6eafc8158d2
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: bfdf0a75ef25d7bdb9541fe8f633bae93e820857
+PODFILE CHECKSUM: 43e1900fc6aa9ef4ba56aac66daa3d325e303e8f
 
 COCOAPODS: 1.5.3

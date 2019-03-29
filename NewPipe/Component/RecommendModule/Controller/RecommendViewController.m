@@ -18,6 +18,7 @@
 #import "NetWorkConstants.h"
 #import "MainTabController.h"
 #import "ZJDrawerController.h"
+#import "NSString+Util.h"
 
 static NSString *const cellId = @"cellId";
 static NSString *const headerId = @"headerId";
@@ -158,7 +159,9 @@ static NSString *const footerId = @"footerId";
 //        CGFloat height = (width * 3 / 4) / columns;
 //        return (CGSize){width, height + 130};
 //    }
-    return (CGSize){CGRectGetWidth(self.view.frame), CGRectGetWidth(self.view.frame) * 3 / 4 + 130};
+    RecommendItem *item = self.dataSource[indexPath.section];
+    float h = [item.title stringHeightWithFont:[UIFont systemFontOfSize:15] andWidth:CGRectGetWidth(self.view.frame)];
+    return (CGSize){CGRectGetWidth(self.view.frame), CGRectGetWidth(self.view.frame) * 3 / 4 + h};
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     return (CGSize){0,1};

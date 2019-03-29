@@ -27,12 +27,12 @@
 }
 
 const static float BIL = 1000000000.0;
-const static NSInteger MAX_M = 999999999;
+const static long MAX_M = 999999999;
 const static float M = 1000000.0;
-const static NSInteger MAX_K = 999999;
+const static long MAX_K = 999999;
 const static float K = 1000.0;
-const static NSInteger MAX_H = 999;
-+ (NSString *)convertNumberToStr:(NSInteger)num {
+const static long MAX_H = 999;
++ (NSString *)convertNumberToStr:(long)num {
     if (num > MAX_M) {
         return [NSString stringWithFormat:@"%.1fBil", num / BIL];
     }
@@ -42,7 +42,7 @@ const static NSInteger MAX_H = 999;
     if (num > MAX_H) {
         return [NSString stringWithFormat:@"%.1fK", num / K];
     }
-    return [NSString stringWithFormat:@"%d", num];
+    return [NSString stringWithFormat:@"%ld", num];
 }
 
 /**

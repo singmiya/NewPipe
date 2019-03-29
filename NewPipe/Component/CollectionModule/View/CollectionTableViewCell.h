@@ -9,5 +9,5 @@
 #import "BaseTableViewCell.h"
 
 @interface CollectionTableViewCell : BaseTableViewCell
-
+- (void)configCellData:(id)data num:(NSInteger)num;
 @end

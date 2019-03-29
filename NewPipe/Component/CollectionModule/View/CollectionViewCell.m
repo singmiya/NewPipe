@@ -31,6 +31,13 @@
     _headImgView.layer.masksToBounds = YES;
     _headImgView.layer.cornerRadius = 20;
     // Initialization code
+//    self.imgView.layer.borderColor = [UIColor redColor].CGColor;
+//    self.imgView.layer.borderWidth = 1;
+//    self.titleLabel.layer.borderColor = [UIColor greenColor].CGColor;
+//    self.titleLabel.layer.borderWidth = 1;
+//    self.descriptionLabel.layer.borderColor = [UIColor yellowColor].CGColor;
+//    self.descriptionLabel.layer.borderWidth = 1;
+
 }
 - (void)configCellData:(id)data title:(NSString *)title {
     if ([data isKindOfClass:[CollectionItem class]]) {

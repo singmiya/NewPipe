@@ -304,4 +304,12 @@
     }
     return videoList;
 }
+
++ (void)getChannelPlayList:(void (^)(NSArray *))callBack withWatchUrl:(NSString *)src {
+    NSString *url = [[NSString stringWithFormat:@"%@%@", YOUTOBE_URL, src] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:url]];
+        callBack([PlayItem extractorDefaultRecommendPlayList:data]);
+    });
+}
 @end

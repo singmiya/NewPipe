@@ -9,6 +9,7 @@ CFBundleDisplayName = "NewPipe";
 // tab
 "Recommended" = "Recommended";
 "Trending" = "Trending";
+"Channel" = "Channel";
 "Collection" = "Collection";
 "Searching" = "Searching";
 
@@ -38,6 +39,7 @@ CFBundleDisplayName = "NewPipe";
 "VideoUnavailable" = "Video is unavailable";
 
 "views" = "views";
+"subscriptions" = "subscriptions";
 
 "NilVideos" = "play list is empty";
 "ListNameNOtNil" = "Please select play list name!";

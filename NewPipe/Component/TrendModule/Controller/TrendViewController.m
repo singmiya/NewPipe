@@ -15,11 +15,15 @@
 #import "ColorUtil.h"
 #import "Constant.h"
 #import "MJRefresh.h"
-
+#import "DataSourceManager.h"
+#import "NetWorkConstants.h"
+#import "ChannelTableViewCell.h"
+#import "ChannelPlayListViewController.h"
 static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdentifier";
+static NSString *ChannelTableViewCellIdentifier = @"ChannelTableViewCellIdentifier";
 @interface TrendViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, copy) NSArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource;
 
 @end
 
@@ -29,26 +33,43 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
     // Do any additional setup after loading the view.
     [self.view addSubview:self.tableView];
     [SVProgressHUD themeConfigContainerView:self.view];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self loadData];
 }
 - (void)loadData {
-    __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading", nil)];
-    [PlayItem getPlayItemList:^(NSArray * _Nonnull playList) {
-        __strong __typeof(weakSelf) strongSelf = weakSelf;
-        strongSelf.dataSource = playList;
+//    [PlayItem getPlayItemList:^(NSArray * _Nonnull playList) {
+//        __strong __typeof(weakSelf) strongSelf = weakSelf;
+//        strongSelf.dataSource = playList;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            //刷新界面
+//            [strongSelf.tableView reloadData];
+//            [SVProgressHUD dismiss];
+//            [strongSelf.tableView.mj_header endRefreshing];
+//        });
+//    }];
+    @weakify(self)
+    self.dataSource = [NSMutableArray array];
+    NSString *url = [NSString stringWithFormat:@"%@%@%@", BASE_URL, PREFIX_URL, @"Category.json"];
+    [[DataSourceManager sharedInstance] get:url params:nil success:^(id response) {
+        @strongify(self)
+        NSArray *arr = response[@"Subscription|"];
+        if (arr.count > 0) {
+            [self.dataSource addObjectsFromArray:arr];
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             //刷新界面
-            [strongSelf.tableView reloadData];
+            [self.tableView reloadData];
             [SVProgressHUD dismiss];
-            [strongSelf.tableView.mj_header endRefreshing];
+            [self.tableView.mj_header endRefreshing];
         });
+    } failure:^(id response) {
+        
     }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 //----- init table view
 - (UITableView *)tableView {
@@ -57,8 +78,8 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];
-        UINib *nib = [UINib nibWithNibName:@"TrendingTableViewCell" bundle:nil];
-        [_tableView registerNib:nib forCellReuseIdentifier:TrendingTableViewCellIdentifier];
+        UINib *nib = [UINib nibWithNibName:@"ChannelTableViewCell" bundle:nil];
+        [_tableView registerNib:nib forCellReuseIdentifier:ChannelTableViewCellIdentifier];
         _tableView.tableFooterView = [UIView new];
         _tableView.separatorColor = UICOLOR_HEX(0x404040);
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -79,7 +100,7 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TrendingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TrendingTableViewCellIdentifier];
+    ChannelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ChannelTableViewCellIdentifier];
     [cell configCellData:self.dataSource[indexPath.row]];
     return cell;
 }
@@ -96,9 +117,9 @@ static NSString *TrendingTableViewCellIdentifier = @"TrendingTableViewCellIdenti
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PlayViewController *playVC = [[PlayViewController alloc] init];
-    playVC.item = self.dataSource[indexPath.row];
-    [playVC setHidesBottomBarWhenPushed:YES];
-    [self.navigationController pushViewController:playVC animated:YES];
+    ChannelPlayListViewController *listVC = [[ChannelPlayListViewController alloc] init];
+    listVC.url = self.dataSource[indexPath.row][@"url"];
+//    [listVC setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:listVC animated:YES];
 }
 @end

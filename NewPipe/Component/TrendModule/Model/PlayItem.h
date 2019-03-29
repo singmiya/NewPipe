@@ -22,6 +22,8 @@
 @property (nullable, nonatomic, copy) NSString *lasttime;
 @property (nullable, nonatomic, copy) NSString *vdescription;
 @property (nonatomic, copy) NSString *avatarImgUrl;
+@property (nonatomic, copy) NSString *wsrc;
+
 
 
 /**
@@ -43,4 +45,6 @@
 + (void)getVideoList:(void(^)(NSArray *videoList))callBack withUrl:(NSString *)url;
 
 + (void)getSearchResult:(void(^)(NSArray *retList))callBack searchString:(NSString *)searchStr page:(NSInteger)page;
+
++ (void)getChannelPlayList:(void(^)(NSArray *pList))callBack withWatchUrl:(NSString *)src;
 @end

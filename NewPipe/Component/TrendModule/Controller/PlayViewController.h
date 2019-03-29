@@ -10,5 +10,7 @@
 @class PlayItem;
 @interface PlayViewController : UIViewController
 @property (nonatomic, strong) PlayItem *item;
-@property (nonatomic, copy) NSArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, copy) NSString *src;
+
 @end

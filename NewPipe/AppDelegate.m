@@ -12,31 +12,86 @@
 #import "ZJDrawerController.h"
 #import "SettingViewController.h"
 
+#import <XCDLumberjackNSLogger/XCDLumberjackNSLogger.h>
+#import <XCDYouTubeKit/XCDYouTubeKit.h>
+
+#import "ContextLogFormatter.h"
+#import <AVFoundation/AVFoundation.h>
+
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
 
+static DDLogLevel LogLevelForEnvironmentVariable(NSString *levelEnvironment, DDLogLevel defaultLogLevel)
+{
+    NSString *logLevelString = [[[NSProcessInfo processInfo] environment] objectForKey:levelEnvironment];
+    return logLevelString ? strtoul(logLevelString.UTF8String, NULL, 0) : defaultLogLevel;
+}
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+static void InitializeLoggers(void)
+{
+    DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
+    DDLogLevel defaultLogLevel = LogLevelForEnvironmentVariable(@"DefaultLogLevel", DDLogLevelInfo);
+    DDLogLevel youTubeLogLevel = LogLevelForEnvironmentVariable(@"XCDYouTubeLogLevel", DDLogLevelWarning);
+    ttyLogger.logFormatter = [[ContextLogFormatter alloc] initWithLevels:@{ @(XCDYouTubeKitLumberjackContext) : @(youTubeLogLevel) } defaultLevel:defaultLogLevel];
+    ttyLogger.colorsEnabled = YES;
+    [DDLog addLogger:ttyLogger];
+    
+    NSString *bonjourServiceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"NSLoggerBonjourServiceName"];
+    XCDLumberjackNSLogger *logger = [[XCDLumberjackNSLogger alloc] initWithBonjourServiceName:bonjourServiceName];
+    logger.tags = @{ @0: @"Movie Player", @(XCDYouTubeKitLumberjackContext) : @"XCDYouTubeKit" };
+    [DDLog addLogger:logger];
+}
+
+static void InitializeUserDefaults(void)
+{
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"VideoIdentifier": @"6v2L2UGZJAM" }];
+}
+
+static void InitializeAudioSession(void)
+{
+    NSString *category = [[NSUserDefaults standardUserDefaults] objectForKey:@"AudioSessionCategory"];
+    if (category)
+    {
+        NSError *error = nil;
+        BOOL success = [[AVAudioSession sharedInstance] setCategory:category error:&error];
+        if (!success)
+        NSLog(@"Audio Session Category error: %@", error);
+    }
+}
+
+static void InitializeDB(void)
+{
     // 初始化数据库
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     [MagicalRecord setupAutoMigratingCoreDataStack];
+}
+
+static void InitializeAppearance(ZJDrawerController *drawer, UIWindow *window)
+{
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     MainTabController *mainTab = [[MainTabController alloc] init];
     SettingViewController *settingVC = [[SettingViewController alloc] init];
-    self.drawer = [[ZJDrawerController alloc] initWithLeftController:settingVC centerController:mainTab rightController:nil];
+    drawer = [[ZJDrawerController alloc] initWithLeftController:settingVC centerController:mainTab rightController:nil];
     // 背景图片
-    self.drawer.backgroundImage = [UIImage imageNamed:@"bg"];
+    drawer.backgroundImage = [UIImage imageNamed:@"bg"];
     // 动画类型
-    self.drawer.drawerControllerStyle = ZJDrawerControllerStyleScale;
+    drawer.drawerControllerStyle = ZJDrawerControllerStyleScale;
     // 任何界面都能打开抽屉
-    self.drawer.canOpenDrawerAtAnyPage = YES;
-    self.drawer.maxLeftControllerWidth = 250;
-    self.window.rootViewController  = self.drawer;
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyWindow];
+    drawer.canOpenDrawerAtAnyPage = YES;
+    drawer.maxLeftControllerWidth = 250;
+    window.rootViewController  = drawer;
+    window.backgroundColor = [UIColor whiteColor];
+    [window makeKeyWindow];
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    InitializeLoggers();
+    InitializeUserDefaults();
+    InitializeAudioSession();
+    InitializeDB();
+    InitializeAppearance(self.drawer, self.window);
     return YES;
 }
 

@@ -1,5 +1,5 @@
 //
-//  CollectionViewCell.h
+//  PickTagCollectionViewCell.h
 //  CollectionViewSubscriptionLabel
 //
 //  Created by chenyk on 15/4/24.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CollectionViewCell : UICollectionViewCell
+@interface PickTagCollectionViewCell : UICollectionViewCell
 @property (nonatomic, strong) UILabel  * titleLabel;
 - (void)select;
 - (void)unselect;

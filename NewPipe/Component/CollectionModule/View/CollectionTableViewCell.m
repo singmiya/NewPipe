@@ -14,10 +14,8 @@
 @interface CollectionTableViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *thumbImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *channelLabel;
-@property (weak, nonatomic) IBOutlet UILabel *viewsNumsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *authorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numLabel;
 @end
 
 @implementation CollectionTableViewCell
@@ -25,8 +23,6 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.durationLabel.layer.cornerRadius = 3;
-    self.durationLabel.layer.masksToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -35,24 +31,19 @@
     // Configure the view for the selected state
 }
 //------ configuration cell data
-- (void)configCellData:(id)data {
-    CollectionItem *item = (CollectionItem *)data;
-    _titleLabel.text = item.title;
-    _channelLabel.text = item.author;
-    if (item.duration != nil) {
-        _durationLabel.text = [NSString stringWithFormat:@" %@ ", item.duration];
+- (void)configCellData:(id)data num:(NSInteger)num {
+    if ([data isKindOfClass:[CollectionItem class]]) {
+        CollectionItem *item =(CollectionItem *)data;
+        _titleLabel.text = item.title;
+        _authorLabel.text = item.author;
+        [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:item.imgurl] placeholderImage:[UIImage imageNamed:@"default"]];
     } else {
-        _durationLabel.hidden = YES;
+        NSDictionary *dic = data;
+        _titleLabel.text = dic[@"name"];
+        _authorLabel.text = dic[@"uploader"];
+        [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"thumbnailUrl"]] placeholderImage:[UIImage imageNamed:@"default"]];
     }
-    if (item.playnum != nil) {
-        _viewsNumsLabel.text = [NSString stringWithFormat:@"%@ %@", [item.playnum convertNumber], NSLocalizedString(@"views", nil)];
-    } else {
-        _viewsNumsLabel.hidden = YES;
-    }
-    
-    _dateLabel.text = item.lasttime;
-    [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:item.imgurl] placeholderImage:[UIImage imageNamed:@"default"]];
-    
+    _numLabel.text = [NSString stringWithFormat:@"%ld", num];
 }
 
 @end

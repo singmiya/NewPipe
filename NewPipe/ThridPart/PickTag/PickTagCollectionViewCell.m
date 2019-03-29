@@ -1,15 +1,15 @@
 //
-//  CollectionViewCell.m
+//  PickTagCollectionViewCell.m
 //  CollectionViewSubscriptionLabel
 //
 //  Created by chenyk on 15/4/24.
 //  Copyright (c) 2015年 chenyk. All rights reserved.
 //
 
-#import "CollectionViewCell.h"
+#import "PickTagCollectionViewCell.h"
 #import "ColorUtil.h"
 
-@implementation CollectionViewCell
+@implementation PickTagCollectionViewCell
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
